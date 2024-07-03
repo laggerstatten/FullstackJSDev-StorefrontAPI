@@ -1,7 +1,6 @@
-/* Replace with your SQL commands */
-CREATE TABLE orders (
+CREATE TABLE IF NOT EXISTS orders (
     id SERIAL PRIMARY KEY,
-    status VARCHAR(10),
+    status VARCHAR(64),
     user_id BIGINT NOT NULL,
     CONSTRAINT FK_user_id FOREIGN KEY (user_id) REFERENCES users(id)
 );
