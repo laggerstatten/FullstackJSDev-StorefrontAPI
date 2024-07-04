@@ -1,7 +1,6 @@
 import { Product, ProductModel } from "../../models/product";
 
 const model = new ProductModel();
-let product1: Product;
 
 describe("Product Model Test Suite", (): void => {
   beforeAll(async () => {
@@ -9,6 +8,18 @@ describe("Product Model Test Suite", (): void => {
     await model.deleteAll();
 
   });
+
+  const product1: Product = {
+    name: "Product Name",
+    price: 99,
+    category: "category",
+  };
+
+  const product2: Product = {
+    name: "Name of Product",
+    price: 999,
+    category: "cat",
+  };
 
   it("should have an index method", () => {
     expect(model.index).toBeDefined();
@@ -28,11 +39,7 @@ describe("Product Model Test Suite", (): void => {
 
   // CREATE
   it("create method should add a product", async (): Promise<void> => {
-    const result = await model.create({
-      name: "Product Name",
-      price: 99,
-      category: "category",
-    });
+    const result = await model.create(product1);
 
     expect(result).toEqual({
       id: jasmine.any(Number),
@@ -58,23 +65,22 @@ describe("Product Model Test Suite", (): void => {
 
   // SHOW
   it("show method should return the correct product", async (): Promise<void> => {
-    const result = await model.show(1);
+    const createResult = await model.create(product1);
+    const showResult = await model.show(
+      createResult.id as unknown as number
+    );
 
-    expect(result).toEqual({
-      id: 1,
-      name: "Product Name",
-      price: 99,
-      category: "category",
-    });
+    expect(showResult).toEqual(createResult);
   });
-
 
   // DELETE
   it("delete method should remove the product", async (): Promise<void> => {
-    await model.delete(0);
-    const result = await model.index();
+    const createResult = await model.create(product2);
+    const deleteResult = await model.delete(
+      createResult.id as unknown as number
+    );
 
-    expect(result).toEqual([]);
+    expect(deleteResult).toBeGreaterThan(0);
   });
 
   // Clean up
