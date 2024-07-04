@@ -9,18 +9,10 @@ export type User = {
 };
 
 export class UserModel {
-  /**
-   * Create user in the database
-   * @param {User} user User object to create.
-   * @param {string} user.user_name User name of the user.
-   * @param {string} user.first_name First name of the user.
-   * @param {string} user.last_name Last name of the user.
-   * @param {string} user.password Hashed Password of user.
-   * @return {User} User object that was created.
-   */
+
+
   async create(user: User): Promise<User> {
     try {
-      // @ts-ignore
       const connection = await client.connect();
       const sql =
         "INSERT INTO users (first_name, last_name, user_name, password) VALUES($1, $2, $3, $4) RETURNING *";
@@ -36,20 +28,13 @@ export class UserModel {
 
       return createdUser;
     } catch (err) {
-      throw new Error(
-        `Unable to add new user ${user.user_name}. Error: ${err}`
-      );
+      throw new Error(`Unable to add new user ${user.user_name}. Error: ${err}`);
     }
   }
 
-  /**
-   * Delete user in the database
-   * @param {number} id Id of the user.
-   * @return {number} No of rows deleted.
-   */
+
   async delete(id: number): Promise<number> {
     try {
-      // @ts-ignore
       const connection = await client.connect();
       const sql = "DELETE FROM users WHERE id = ($1)";
 
@@ -63,12 +48,9 @@ export class UserModel {
     }
   }
 
-  /**
-   * Delete All user in the database - Only for test suites
-   */
+
   async deleteAll(): Promise<void> {
     try {
-      // @ts-ignore
       const connection = await client.connect();
       const sql = "DELETE FROM users";
 
@@ -79,33 +61,8 @@ export class UserModel {
     }
   }
 
-  /**
-   * Get user based on user_name from the users table in the database
-   * @param {string} user_name username of the user to be fetched.
-   * @return {User} User object based on the id passed.
-   */
-  async getUserByUserName(user_name: string): Promise<User> {
-    try {
-      // @ts-ignore
-      const connection = await client.connect();
-      const sql = `SELECT * FROM users WHERE user_name='${user_name}'`;
-
-      const result = await connection.query(sql);
-      connection.release();
-
-      return result.rows[0];
-    } catch (err) {
-      throw new Error(`Unable to get user. Error: ${err}`);
-    }
-  }
-
-  /**
-   * Get all the users from database
-   * @return {User[]} list of users.
-   */
   async index(): Promise<User[]> {
     try {
-      // @ts-ignore
       const connection = await client.connect();
       const sql = "SELECT * FROM users";
 
@@ -118,14 +75,8 @@ export class UserModel {
     }
   }
 
-  /**
-   * Get user based on id from the users table in the database
-   * @param {number} id Id of the user to be fetched.
-   * @return {User} User object based on the id passed.
-   */
   async show(id: number): Promise<User> {
     try {
-      // @ts-ignore
       const connection = await client.connect();
       const sql = "SELECT * FROM users WHERE id=($1)";
 
@@ -138,19 +89,9 @@ export class UserModel {
     }
   }
 
-  /**
-   * Update user in the database
-   * @param {User} user User object to create.
-   * @param {number} user.id Id of the user.
-   * @param {string} user.user_name User name of the user.
-   * @param {string} user.first_name First name of the user.
-   * @param {string} user.last_name Last name of the user.
-   * @param {string} user.password Hashed Password of user.
-   * @return {User} User object that was edited.
-   */
+
   async update(user: User): Promise<User> {
     try {
-      // @ts-ignore
       const connection = await client.connect();
       const sql =
         "UPDATE users set first_name = $2, last_name = $3, user_name = $4, password = $5 WHERE id = $1 RETURNING *";
