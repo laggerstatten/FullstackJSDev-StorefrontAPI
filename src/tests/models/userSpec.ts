@@ -25,16 +25,47 @@ describe("User Model Test Suite", (): void => {
   });
 
   // CREATE
-  it("should create a user", async (): Promise<void> => {
-    user1 = await model.create({
-      first_name: "John",
-      last_name: "Doe",
-      user_name: "john_doe",
-      password: "passwordABC123",
+  it("create method should add a user", async (): Promise<void> => {
+    const result = await model.create({
+      first_name: "First",
+      last_name: "Last",
+      user_name: "username",
+      password: "password123",
     });
-    expect(user1.user_name).toEqual("john_doe");
-    expect(user1.first_name).toEqual("John");
-    expect(user1.id).toBeDefined();
+
+    expect(result).toEqual({
+      id: 1,
+      first_name: "First",
+      last_name: "Last",
+      user_name: "username",
+      password: "password123",
+    });
+
+    expect(result.id).toBeDefined();
+  });
+
+  // INDEX
+  it('index method should return a list of users', async () => {
+    const result = await model.index();
+    expect(result).toEqual([{
+      id: 1,
+      first_name: "First",
+      last_name: "Last",
+      user_name: "username",
+      password: "password123",
+    }]);
+  });
+
+  // SHOW
+  it('show method should return the correct user', async () => {
+    const result = await model.show(1);
+    expect(result).toEqual({
+      id: 1,
+      first_name: "First",
+      last_name: "Last",
+      user_name: "username",
+      password: "password123",
+    });
   });
 
   // GET ALL
@@ -42,6 +73,12 @@ describe("User Model Test Suite", (): void => {
   // UPDATE
 
   // DELETE
+  it('delete method should remove the user', async () => {
+    model.delete(1);
+    const result = await model.index()
+
+    expect(result).toEqual([]);
+  });
 
   // Clean up
   afterAll(async () => {
