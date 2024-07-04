@@ -25,9 +25,4 @@ users.get("/:id", authenticate, (request, response) => {
   userHandler.show(request, response);
 });
 
-// UPDATE
-users.put("/:id", authenticate, (request, response) => {
-  userHandler.update(request, response);
-});
-
 export default users;

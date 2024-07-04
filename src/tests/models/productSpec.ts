@@ -4,6 +4,12 @@ const model = new ProductModel();
 let product1: Product;
 
 describe("Product Model Test Suite", (): void => {
+  beforeAll(async () => {
+
+    await model.deleteAll();
+
+  });
+
   it("should have an index method", () => {
     expect(model.index).toBeDefined();
   });
@@ -16,66 +22,59 @@ describe("Product Model Test Suite", (): void => {
     expect(model.show).toBeDefined();
   });
 
-  it("should have update method", () => {
-    expect(model.update).toBeDefined();
-  });
-
   it("should have delete method", () => {
     expect(model.delete).toBeDefined();
   });
 
   // CREATE
-  it("should create a product", async (): Promise<void> => {
-    product1 = await model.create({
-      name: "Penne Pasta",
-      price: 80,
-      category: "food",
-    });
-    expect(product1.name).toEqual("Penne Pasta");
-    expect(product1.price).toEqual(80);
-    expect(product1.category).toEqual("food");
-    expect(product1.id).toBeDefined();
-  });
-
-  // GET ALL
-  it("should get all products", async (): Promise<void> => {
-    const getAllProducts = await model.index();
-
-    expect(getAllProducts.length).toBe(1);
-    expect(getAllProducts[0].name).toEqual(product1.name);
-    expect(getAllProducts[0].price).toEqual(product1.price);
-    expect(getAllProducts[0].category).toEqual(product1.category);
-  });
-
-  // GET BY ID
-  it("should get product based on id", async (): Promise<void> => {
-    const product = await model.show(product1.id as unknown as number);
-
-    expect(product.name).toEqual(product1.name);
-    expect(product.price).toEqual(product1.price);
-    expect(product.category).toEqual(product1.category);
-  });
-
-  // UPDATE
-  it("should update product based on id", async (): Promise<void> => {
-    const product = await model.update({
-      id: product1.id,
-      name: "Chocolate Ice cream",
-      price: 60,
-      category: "dessert",
+  it("create method should add a product", async (): Promise<void> => {
+    const result = await model.create({
+      name: "Product Name",
+      price: 99,
+      category: "category",
     });
 
-    expect(product.name).toEqual("Chocolate Ice cream");
-    expect(product.price).toEqual(60);
-    expect(product.category).toEqual("dessert");
+    expect(result).toEqual({
+      id: jasmine.any(Number),
+      name: "Product Name",
+      price: 99,
+      category: "category",
+    });
+
+    expect(result.id).toBeDefined();
   });
 
-  // DELETE
-  it("should delete the product", async (): Promise<void> => {
-    await model.delete(product1.id as unknown as number);
+  // INDEX
+  it("index method should return a list of products", async (): Promise<void> => {
     const result = await model.index();
 
-    expect(result.length).toBe(0);
+    expect(result).toEqual([{
+      id: jasmine.any(Number),
+      name: "Product Name",
+      price: 99,
+      category: "category",
+    }]);
+  });
+
+  // SHOW
+  it("show method should return the correct product", async (): Promise<void> => {
+    const result = await model.show(1);
+
+    expect(result).toEqual({
+      id: 1,
+      name: "Product Name",
+      price: 99,
+      category: "category",
+    });
+  });
+
+
+  // DELETE
+  it("delete method should remove the product", async (): Promise<void> => {
+    await model.delete(0);
+    const result = await model.index();
+
+    expect(result).toEqual([]);
   });
 
   // Clean up

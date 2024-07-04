@@ -13,17 +13,22 @@ let user1: User;
 
 describe("Order Model Test Suite", (): void => {
   beforeAll(async () => {
+
+    await model.deleteAll();
+    await productModel.deleteAll();
+    await userModel.deleteAll();
+
     user1 = await userModel.create({
-      user_name: "tom_jerry",
-      first_name: "Thomas",
-      last_name: "Jasper Cat",
-      password: "TomAndJerry",
+      first_name: "First",
+      last_name: "Last",
+      user_name: "username",
+      password: "password123",
     });
 
     product1 = await productModel.create({
-      name: "Penne Pasta",
-      price: 80,
-      category: "food",
+      name: "Product Name",
+      price: 99,
+      category: "category",
     });
 
   });
@@ -40,16 +45,12 @@ describe("Order Model Test Suite", (): void => {
     expect(model.show).toBeDefined();
   });
 
-  it("should have update method", () => {
-    expect(model.update).toBeDefined();
-  });
-
   it("should have delete method", () => {
     expect(model.delete).toBeDefined();
   });
 
   // CREATE
-  it("should create a order", async (): Promise<void> => {
+  it("create method should add a order", async (): Promise<void> => {
     order1 = await model.create({
       status: "active",
       user_id: user1.id as unknown as number,
@@ -65,8 +66,8 @@ describe("Order Model Test Suite", (): void => {
     expect(order1.id).toBeDefined();
   });
 
-  // GET ALL
-  it("should get all orders", async (): Promise<void> => {
+  // INDEX
+  it("index method should return a list of orders", async (): Promise<void> => {
     const getAllOrders = await model.index();
 
     expect(getAllOrders.length).toBe(1);
@@ -74,28 +75,17 @@ describe("Order Model Test Suite", (): void => {
     expect(getAllOrders[0].status).toEqual(order1.status);
   });
 
-  // GET BY ID
-  it("should get order based on id", async (): Promise<void> => {
+  // SHOW
+  it("show method should return the correct order", async (): Promise<void> => {
     const order = await model.show(order1.id as unknown as number);
 
     expect(order.user_id).toEqual(order1.user_id);
     expect(order.status).toEqual(order1.status);
   });
 
-  // UPDATE
-  it("should update order status", async (): Promise<void> => {
-    const order = await model.update({
-      id: order1.id as unknown as number,
-      status: "completed",
-      products: [],
-      user_id: user1.id as unknown as number,
-    });
-
-    expect(order.status).not.toEqual(order1.status);
-  });
 
   // DELETE
-  it("should delete the order", async (): Promise<void> => {
+  it("delete method should remove the order", async (): Promise<void> => {
     await model.delete(order1.id as unknown as number);
     const result = await model.index();
 

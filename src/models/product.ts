@@ -9,12 +9,11 @@ export type Product = {
 
 export class ProductModel {
 
-
+  // CREATE
   async create(product: Product): Promise<Product> {
     try {
       const connection = await client.connect();
-      const sql =
-        "INSERT INTO products (name, price, category) VALUES($1, $2, $3) RETURNING *";
+      const sql = "INSERT INTO products (name, price, category) VALUES($1, $2, $3) RETURNING *";
 
       const result = await connection.query(sql, [
         product.name,
@@ -30,7 +29,7 @@ export class ProductModel {
     }
   }
 
-
+  // DELETE
   async delete(id: number): Promise<number> {
     try {
       const connection = await client.connect();
@@ -46,7 +45,7 @@ export class ProductModel {
     }
   }
 
-
+  // DELETE ALL
   async deleteAll(): Promise<void> {
     try {
       const connection = await client.connect();
@@ -59,6 +58,7 @@ export class ProductModel {
     }
   }
 
+  // INDEX
   async index(): Promise<Product[]> {
     try {
       const connection = await client.connect();
@@ -73,6 +73,7 @@ export class ProductModel {
     }
   }
 
+  // SHOW
   async show(id: number): Promise<Product> {
     try {
       const connection = await client.connect();
@@ -87,24 +88,4 @@ export class ProductModel {
     }
   }
 
-
-  async update(product: Product): Promise<Product> {
-    try {
-      const connection = await client.connect();
-      const sql = "UPDATE products set name = $2, price = $3, category = $4 WHERE id = $1 RETURNING *";
-
-      const result = await connection.query(sql, [
-        product.id,
-        product.name,
-        product.price,
-        product.category,
-      ]);
-      const editedProduct = result.rows[0];
-      connection.release();
-
-      return editedProduct;
-    } catch (err) {
-      throw new Error(`Unable to update product ${product.name}. Error: ${err}`);
-    }
-  }
 }

@@ -30,9 +30,4 @@ orders.get("/:id", authenticate, (request, response) => {
   orderHandler.show(request, response);
 });
 
-// UPDATE
-orders.put("/status/:user_id", authenticate, (request, response) => {
-  orderHandler.update(request, response);
-});
-
 export default orders;

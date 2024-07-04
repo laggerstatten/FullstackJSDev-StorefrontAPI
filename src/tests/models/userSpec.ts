@@ -4,6 +4,12 @@ const model = new UserModel();
 let user1: User;
 
 describe("User Model Test Suite", (): void => {
+  beforeAll(async () => {
+
+    await model.deleteAll();
+
+  });
+
   it("should have an index method", () => {
     expect(model.index).toBeDefined();
   });
@@ -14,10 +20,6 @@ describe("User Model Test Suite", (): void => {
 
   it("should have a show method", () => {
     expect(model.show).toBeDefined();
-  });
-
-  it("should have update method", () => {
-    expect(model.update).toBeDefined();
   });
 
   it("should have delete method", () => {
@@ -34,7 +36,7 @@ describe("User Model Test Suite", (): void => {
     });
 
     expect(result).toEqual({
-      id: 1,
+      id: jasmine.any(Number),
       first_name: "First",
       last_name: "Last",
       user_name: "username",
@@ -45,10 +47,11 @@ describe("User Model Test Suite", (): void => {
   });
 
   // INDEX
-  it('index method should return a list of users', async () => {
+  it("index method should return a list of users", async () => {
     const result = await model.index();
+
     expect(result).toEqual([{
-      id: 1,
+      id: jasmine.any(Number),
       first_name: "First",
       last_name: "Last",
       user_name: "username",
@@ -57,8 +60,9 @@ describe("User Model Test Suite", (): void => {
   });
 
   // SHOW
-  it('show method should return the correct user', async () => {
+  it("show method should return the correct user", async () => {
     const result = await model.show(1);
+
     expect(result).toEqual({
       id: 1,
       first_name: "First",
@@ -68,14 +72,11 @@ describe("User Model Test Suite", (): void => {
     });
   });
 
-  // GET ALL
-  // GET BY ID
-  // UPDATE
 
   // DELETE
-  it('delete method should remove the user', async () => {
-    model.delete(1);
-    const result = await model.index()
+  it("delete method should remove the user", async () => {
+    await model.delete(0);
+    const result = await model.index();
 
     expect(result).toEqual([]);
   });

@@ -25,9 +25,4 @@ products.get("/:id", (request, response) => {
   productHandler.show(request, response);
 });
 
-// UPDATE
-products.put("/:id", (request, response) => {
-  productHandler.update(request, response);
-});
-
 export default products;

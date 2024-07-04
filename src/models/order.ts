@@ -35,12 +35,11 @@ export class OrderModel {
     }
   }
 
-
+  // CREATE
   async create(order: Order): Promise<Order> {
     try {
       const connection = await client.connect();
-      const sql =
-        "INSERT INTO orders (status, user_id) VALUES($1, $2) RETURNING *";
+      const sql = "INSERT INTO orders (status, user_id) VALUES($1, $2) RETURNING *";
 
       const result = await connection.query(sql, [
         order.status,
@@ -62,7 +61,7 @@ export class OrderModel {
     }
   }
 
-
+  // DELETE
   async delete(id: number): Promise<number> {
     try {
       const connection = await client.connect();
@@ -82,7 +81,7 @@ export class OrderModel {
     }
   }
 
-
+  // DELETE ALL
   async deleteAll(): Promise<void> {
     try {
       const connection = await client.connect();
@@ -99,6 +98,7 @@ export class OrderModel {
     }
   }
 
+  // INDEX
   async index(): Promise<Order[]> {
     try {
       const connection = await client.connect();
@@ -113,6 +113,7 @@ export class OrderModel {
     }
   }
 
+  // SHOW
   async show(id: number): Promise<Order> {
     try {
       const connection = await client.connect();
@@ -127,18 +128,4 @@ export class OrderModel {
     }
   }
 
-
-  async update(order: Order): Promise<Order> {
-    try {
-      const connection = await client.connect();
-      const sql = "UPDATE orders SET status = ($1) WHERE id=($2) RETURNING *";
-
-      const result = await connection.query(sql, [order.status, order.id]);
-      connection.release();
-
-      return result.rows[0];
-    } catch (err) {
-      throw new Error(`Unable to update the order. Error: ${err}`);
-    }
-  }
 }

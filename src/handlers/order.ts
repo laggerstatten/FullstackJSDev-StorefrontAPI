@@ -34,18 +34,18 @@ export default class OrderHandler {
       const { user_id } = _request.params;
       const { status, products } = _request.body;
       if (status && products.length > 0 && user_id) {
-        const orderPlaced = await model.create({
+        const order = await model.create({
           user_id: Number(user_id),
           status,
           products,
         });
         response
           .status(200)
-          .json({ message: "Order created successfully", order: orderPlaced });
+          .json({ message: "Order created successfully", order: order });
       } else {
         response
           .status(400)
-          .json({ error: "status and products are required to create an order" });
+          .json({ error: "status and products are required" });
       }
     } catch (error) {
       response
@@ -66,7 +66,7 @@ export default class OrderHandler {
       } else {
         response
           .status(400)
-          .json({ message: `Couldn't delete order with id: ${id}` });
+          .json({ message: `Could not delete order with id: ${id}` });
       }
     } catch (error) {
       response
@@ -104,31 +104,4 @@ export default class OrderHandler {
     }
   }
 
-  // UPDATE
-  async update(_request: Request, response: Response) {
-    try {
-      const { user_id } = _request.params;
-      const { status, id } = _request.body;
-      if (status && id && user_id) {
-        const updatedOrder = await model.update({
-          id: id as unknown as number,
-          status,
-          products: [],
-          user_id: user_id as unknown as number,
-        });
-
-        response
-          .status(200)
-          .json({ message: "Order status has been updated successfully", order: updatedOrder });
-      } else {
-        response
-          .status(400)
-          .json({ error: "status and id are required to update an order" });
-      }
-    } catch (error) {
-      response
-        .status(500)
-        .json(`error while updating order: ${error}`);
-    }
-  }
 }

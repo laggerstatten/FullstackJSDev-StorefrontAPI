@@ -80,26 +80,4 @@ export default class ProductHandler {
     }
   }
 
-  // UPDATE
-  async update(_request: Request, response: Response) {
-    try {
-      const { id } = _request.params;
-      const { name, price, category } = _request.body;
-
-      const product = await model.update({
-        id: Number(id),
-        name,
-        price: Number(price),
-        category,
-      });
-
-      response
-        .status(200)
-        .json(product);
-    } catch (error) {
-      response
-        .status(500)
-        .json(`error while updating the product: ${error}`);
-    }
-  }
 }

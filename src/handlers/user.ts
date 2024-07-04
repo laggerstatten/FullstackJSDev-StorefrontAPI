@@ -81,27 +81,4 @@ export default class UserHandler {
     }
   }
 
-  // UPDATE
-  async update(_request: Request, response: Response) {
-    try {
-      const { id } = _request.params;
-      const { user_name, first_name, last_name, password } = _request.body;
-
-      const user = await model.update({
-        id: Number(id),
-        user_name,
-        first_name,
-        last_name,
-        password,
-      });
-
-      response
-        .status(200)
-        .json(user);
-    } catch (error) {
-      response
-        .status(500)
-        .json(`error while updating the user: ${error}`);
-    }
-  }
 }
