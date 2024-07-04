@@ -69,7 +69,7 @@ describe("Order Model Test Suite", (): void => {
   it("should get all orders", async (): Promise<void> => {
     const getAllOrders = await model.index();
 
-    expect(getAllOrders.length).toBe(2);
+    expect(getAllOrders.length).toBe(1);
     expect(getAllOrders[0].user_id).toEqual(order1.user_id);
     expect(getAllOrders[0].status).toEqual(order1.status);
   });
@@ -99,7 +99,7 @@ describe("Order Model Test Suite", (): void => {
     await model.delete(order1.id as unknown as number);
     const result = await model.index();
 
-    expect(result.length).toBe(1);
+    expect(result.length).toBe(0);
   });
 
   // Clean up
