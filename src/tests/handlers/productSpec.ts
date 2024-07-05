@@ -25,9 +25,9 @@ describe("Product Endpoint Test Suite", (): void => {
 
 
   // CREATE
-  it("create endpoint should add a product: POST /api/products/create", async (): Promise<void> => {
+  it("create endpoint should add a product: POST /api/products/", async (): Promise<void> => {
     let response = await request
-      .post("/api/products/create")
+      .post("/api/products/")
       .send({
         name: "New Product",
         price: 9999,

@@ -11,12 +11,12 @@ orders.post("/addProduct", authenticate, (request, response) => {
 });
 
 // CREATE
-orders.post("/create/:user_id", authenticate, (request, response) => {
+orders.post("/:user_id", authenticate, (request, response) => {
   orderHandler.create(request, response);
 });
 
 // DELETE
-orders.delete("/deleteOrder/:id", authenticate, (request, response) => {
+orders.delete("/:id", authenticate, (request, response) => {
   orderHandler.delete(request, response);
 });
 

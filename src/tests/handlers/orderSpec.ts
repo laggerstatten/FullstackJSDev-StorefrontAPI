@@ -25,7 +25,7 @@ describe("Order Endpoint Test Suite", (): void => {
     user = AuthenticationHelper.decodeToken(token) as User;
 
     response = await request
-      .post("/api/products/create")
+      .post("/api/products/")
       .send({
         name: "New Product",
         price: 9999,
@@ -39,9 +39,9 @@ describe("Order Endpoint Test Suite", (): void => {
   });
 
   // CREATE
-  it("create endpoint should add a orders: POST /api/orders/create/user_id", async (): Promise<void> => {
+  it("create endpoint should add a orders: POST /api/orders/user_id", async (): Promise<void> => {
     let response = await request
-      .post(`/api/orders/create/${user.id}`)
+      .post(`/api/orders/${user.id}`)
       .send({
         status: "active",
         products: [
