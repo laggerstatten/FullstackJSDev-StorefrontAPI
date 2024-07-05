@@ -63,10 +63,6 @@ export class UserModel {
     }
   }
 
-  /**
-   * Get user based on user_name from the users table in the database
-   * @param {string} user_name username of the user to be fetched.
-   * @return {User} User object based on the id passed.
   async getUserByUserName(user_name: string): Promise<User> {
     try {
       // @ts-ignore
