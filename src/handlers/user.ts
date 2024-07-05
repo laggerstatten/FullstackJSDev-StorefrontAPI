@@ -70,40 +70,42 @@ export default class UserHandler {
     }
   }
 
-  /**
-    async login(_request: Request, response: Response) {
-      try {
-        const { user_name, password } = _request.body;
-        if (!(user_name && password))
-          return response
-            .status(400)
-            .json({ error: "user_name and password are required" });
-  
-        const user = await model.getUserByUserName(user_name);
-        if (!user)
-          return response
-            .status(401)
-            .json({ error: "Invalid user_name or password provided" });
-  
-        const passwordMatches = AuthenticationHelper.verifyPassword(
-          user.password,
-          password
         );
-        if (!passwordMatches)
-          return response
-            .status(401)
-            .json({ error: "Verify user_name and password again" });
-  
-        const token = AuthenticationHelper.generateToken(Number(user.id));
-        response
-          .status(200)
-          .json({ message: "Logged in successfully", token: token });
-      } catch (error) {
-        response.status(500)
-          .json(`error while trying to login: ${error}`);
-      }
+  async login(_request: Request, response: Response) {
+    try {
+      const { user_name, password } = _request.body;
+      //user_name and password values are required check
+      if (!(user_name && password))
+        return response
+          .status(400)
+          .json({ error: "user_name and password are required" });
+
+      const user = await model.getUserByUserName(user_name);
+      //If user is empty check
+      if (!user)
+        return response
+          .status(401)
+          .json({ error: "Invalid user_name or password provided" });
+
+      const passwordMatches = AuthenticationHelper.verifyPassword(
+        user.password,
+        password
+      );
+      if (!passwordMatches)
+        return response
+          .status(401)
+          .json({ error: "Verify user_name and password again" });
+
+      const token = AuthenticationHelper.generateToken(Number(user.id));
+      response
+        .status(200)
+        .json({ message: "Logged in successfully", token: token });
+    } catch (error) {
+      response
+        .status(500)
+        .json(`error while trying to login: ${error}`);
     }
-  */
+  }
 
   // SHOW
   async show(_request: Request, response: Response) {
@@ -120,4 +122,27 @@ export default class UserHandler {
     }
   }
 
+  async update(_request: Request, response: Response) {
+    try {
+      const { id } = _request.params;
+      const { user_name, first_name, last_name, password } = _request.body;
+      const hash = AuthenticationHelper.hashedPassword(password);
+
+      const user = await model.update({
+        id: Number(id),
+        user_name,
+        first_name,
+        last_name,
+        password: hash,
+      });
+
+      response
+        .status(200)
+        .json(user);
+    } catch (error) {
+      response
+        .status(500)
+        .json(`error while updating the user: ${error}`);
+    }
+  }
 }

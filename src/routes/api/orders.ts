@@ -11,16 +11,24 @@ orders.post("/addProduct", authenticate, (request, response) => {
 });
 
 // CREATE
-orders.post("/:user_id", authenticate, (request, response) => {
+orders.post("/create/:user_id", authenticate, (request, response) => {
   orderHandler.create(request, response);
 });
 
 // DELETE
-orders.delete("/:id", authenticate, (request, response) => {
+orders.delete("/deleteOrder/:id", authenticate, (request, response) => {
   orderHandler.delete(request, response);
 });
 
 // INDEX
+orders.get(
+  "/getOrderByStatus/:id/:status",
+  authenticate,
+  (request, response) => {
+    orderHandler.getOrderByStatus(request, response);
+  }
+);
+
 orders.get("/", authenticate, (request, response) => {
   orderHandler.index(request, response);
 });
@@ -28,6 +36,10 @@ orders.get("/", authenticate, (request, response) => {
 // SHOW
 orders.get("/:id", authenticate, (request, response) => {
   orderHandler.show(request, response);
+});
+
+orders.put("/status/:user_id", authenticate, (request, response) => {
+  orderHandler.updateOrderStatus(request, response);
 });
 
 export default orders;

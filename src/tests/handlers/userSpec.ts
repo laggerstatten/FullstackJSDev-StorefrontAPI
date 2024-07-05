@@ -12,10 +12,10 @@ describe("User Endpoint Test Suite", (): void => {
   // CREATE
   it("create endpoint should add a user: POST /api/users/", async (): Promise<void> => {
     const response = await request.post("/api/users/").send({
-      first_name: "First",
-      last_name: "Last",
-      user_name: "username",
-      password: "password123",
+      first_name: "Aisha",
+      last_name: "William",
+      user_name: "aisha_blogs",
+      password: "enjoyEveryDay",
     });
 
     token = response.body.token as string;
@@ -26,29 +26,26 @@ describe("User Endpoint Test Suite", (): void => {
   });
 
   // INDEX
-  it("index endpoint should return a list of users. GET /api/users/", async (): Promise<void> => {
+  it("index endpoint should return a list of users. GET /api/users/:id", async (): Promise<void> => {
+    const response = await request
+      .get("/api/users/")
+      .get(`/api/users/${user.id}`)
+      .set("Authorization", token);
+
+    expect(response.body.first_name).toEqual("Aisha");
+    expect(response.body.last_name).toEqual("William");
+    expect(response.body.user_name).toEqual("aisha_blogs");
+  });
+
+  // SHOW
+  it("show endpoint should return the correct user. GET /api/users/", async (): Promise<void> => {
     const response = await request
       .get("/api/users/")
       .set("Authorization", token);
 
-    expect(response.body[0]).toEqual([{
-      id: jasmine.any(Number),
-      first_name: "First",
-      last_name: "Last",
-      user_name: "username",
-      password: "password123",
-    }]);
-  });
-
-  // SHOW
-  it("show endpoint should return the correct user GET /api/users/:id", async (): Promise<void> => {
-    const response = await request
-      .get(`/api/users/${user.id}`)
-      .set("Authorization", token);
-
-    expect(response.body.first_name).toEqual("First");
-    expect(response.body.last_name).toEqual("Last");
-    expect(response.body.user_name).toEqual("username");
+    expect(response.body[0].first_name).toEqual("Aisha");
+    expect(response.body[0].last_name).toEqual("William");
+    expect(response.body[0].user_name).toEqual("aisha_blogs");
   });
 
   // Clean up

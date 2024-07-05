@@ -17,6 +17,14 @@ export type OrderProduct = {
 export class OrderModel {
 
 
+  /**
+   * Add Products to the order in the database
+   * @param {OrderProduct} product Products object to create.
+   * @param {number} product.order_id order id.
+   * @param {number} product.product_id product id.
+   * @param {number} product.quantity quantity of the product.
+   * @return {OrderProduct} returns added product in the order.
+   */
   async addProduct(product: OrderProduct): Promise<OrderProduct> {
     try {
       const connection = await client.connect();
@@ -36,6 +44,14 @@ export class OrderModel {
   }
 
   // CREATE
+  /**
+   * Create order in the database
+   * @param {Order} order Order object to create.
+   * @param {number} order.user_id User id of the user who places the order.
+   * @param {string} order.status status of the order.
+   * @param {OrderProduct} order.products Products that the user orders.
+   * @return {Order} returns Order object.
+   */
   async create(order: Order): Promise<Order> {
     try {
       const connection = await client.connect();
@@ -62,6 +78,11 @@ export class OrderModel {
   }
 
   // DELETE
+  /**
+   * Delete order in the database
+   * @param {number} id Id of the order.
+   * @return {number} No of rows deleted.
+   */
   async delete(id: number): Promise<number> {
     try {
       const connection = await client.connect();
@@ -82,6 +103,9 @@ export class OrderModel {
   }
 
   // DELETE ALL
+  /**
+   * Delete all orders in the database - Only for testing purposes
+   */
   async deleteAll(): Promise<void> {
     try {
       const connection = await client.connect();
@@ -98,7 +122,34 @@ export class OrderModel {
     }
   }
 
+  /**
+   * Get order based on status from the orders table in the database
+   * @param {string} status status of the order to be fetched.
+   * @param {number} user_id order to be fetched based on userId.
+   * @return {Order[]} List of order object based on the status passed.
+   */
+  async getOrdersByStatus(status: string, user_id: number): Promise<Order[]> {
+    try {
+      const connection = await client.connect();
+      const sql = `SELECT o.id, p.name as product_name, op.quantity FROM orders o INNER JOIN order_products op ON o.id = op.order_id
+                INNER JOIN products p ON p.id = op.product_id  WHERE LOWER(status) = LOWER('${status}') AND user_id = ${user_id}`;
+
+      const result = await connection.query(sql);
+      connection.release();
+
+      return result.rows;
+    } catch (err) {
+      throw new Error(
+        `Unable to get orders based on status[${status}]. Error: ${err}`
+      );
+    }
+  }
+
   // INDEX
+  /**
+   * Get all the orders from database
+   * @return {Order[]} list of orders.
+   */
   async index(): Promise<Order[]> {
     try {
       const connection = await client.connect();
@@ -114,10 +165,15 @@ export class OrderModel {
   }
 
   // SHOW
+  /**
+   * Get order based on user id from the orders table in the database
+   * @param {number} id user Id of the order to be fetched.
+   * @return {Order} Orders object based on the id passed.
+   */
   async show(id: number): Promise<Order> {
     try {
       const connection = await client.connect();
-      const sql = "SELECT * FROM orders WHERE id=($1)";
+      const sql = "SELECT * FROM orders WHERE user_id=($1)";
 
       const result = await connection.query(sql, [id]);
       connection.release();
@@ -128,4 +184,25 @@ export class OrderModel {
     }
   }
 
+  /**
+   * update order status in the database
+   * @param {Order} order Order to update
+   * @param {number} order.id id of the order.
+   * @param {string} order.user_id user id of the order.
+   * @param {string} order.status status of the order.
+   * @return {Order} returns Order object.
+   */
+  async updateStatus(order: Order): Promise<Order> {
+    try {
+      const connection = await client.connect();
+      const sql = "UPDATE orders SET status = ($1) WHERE id=($2) RETURNING *";
+
+      const result = await connection.query(sql, [order.status, order.id]);
+      connection.release();
+
+      return result.rows[0];
+    } catch (err) {
+      throw new Error(`Unable to update the order. Error: ${err}`);
+    }
+  }
 }

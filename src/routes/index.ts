@@ -10,7 +10,7 @@ routes.use("/api/products", product);
 routes.use("/api/orders", order);
 
 routes.get("/", (_request: Request, response: Response) => {
-  response.send("Hello, world");
+  response.send("Welcome to Store-front backend!");
 });
 
 export default routes;
