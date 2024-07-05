@@ -9,9 +9,9 @@ After cloning/downloading this repo, create a file named '.env' and add the belo
 
 ```
 POSTGRES_HOST = 127.0.0.1
-POSTGRES_DB = demostore
-POSTGRES_TEST_DB = demostore_test
-POSTGRES_USER = demotest_user
+POSTGRES_DB = equipment_shop
+POSTGRES_TEST_DB = equipment_shop_test
+POSTGRES_USER = test_user
 POSTGRES_PASSWORD = password123
 ENV = dev
 BCRYPT_PASSWORD = test_bcrypt_password
@@ -19,14 +19,16 @@ SALT_ROUNDS = 10
 TOKEN_SECRET = test_token_secret
 ```
 
+
+
 ### Setting up postgresql
 I'm using Windows OS, so all my commands will be related to that.
 
 1. Install the PostgreSQL from [here](https://www.postgresql.org/download/windows). Ignore if you have installed it already.
 2. Run `psql postgres` and login to the PostgreSQL database.
-3. Run `CREATE USER demotest_user CREATEDB CREATEROLE PASSWORD 'password123';` to create a user `test_user` with password `password123` and have privileges to create db and new role.
-4. Run `CREATE DATABASE demostore WITH OWNER = demotest_user;` and `CREATE DATABASE demostore_test WITH OWNER = demotest_user;` to create the database `demostore` and `demostore_test` is created for testing.
-5. Run `psql -h localhost -U demotest_user -d demostore` in a new terminal to check if the user is able to access the database demostore.
+3. Run `CREATE USER test_user CREATEDB CREATEROLE PASSWORD 'password123';` to create a user `test_user` with password `password123` and have privileges to create db and new role.
+4. Run `CREATE DATABASE equipment_shop WITH OWNER = test_user;` and `CREATE DATABASE equipment_shop_test WITH OWNER = test_user;` to create the database `equipment_shop` and `equipment_shop_test` is created for testing.
+5. Run `psql -h localhost -U test_user -d equipment_shop` in a new terminal to check if the user is able to access the database equipment_shop.
 
 ### Run Locally
 
