@@ -1,16 +1,18 @@
 import { User, UserModel } from "../../models/user";
 
 const model = new UserModel();
+let user1: User;
+let user2: User;
 
 describe("User Model Test Suite", (): void => {
-  const user1: User = {
+  const user3: User = {
     first_name: "First",
     last_name: "Last",
     user_name: "username",
     password: "password123",
   };
 
-  const user2: User = {
+  const user4: User = {
     first_name: "John",
     last_name: "Smith",
     user_name: "nameuser",
@@ -35,49 +37,49 @@ describe("User Model Test Suite", (): void => {
 
   // CREATE
   it("create method should add a user", async (): Promise<void> => {
-    const createUserResult = await model.create(user1);
-    const getCreatedUsers = await model.show(
-      createUserResult.id as unknown as number
+    const createResult = await model.create(user3);
+    const getCreated = await model.show(
+      createResult.id as unknown as number
     );
 
-    expect(createUserResult.user_name).toEqual(user1.user_name);
-    expect(createUserResult.first_name).toEqual(user1.first_name);
-    expect(createUserResult.id).toBeDefined();
-    expect(getCreatedUsers).toEqual(createUserResult);
+    expect(createResult.user_name).toEqual(user3.user_name);
+    expect(createResult.first_name).toEqual(user3.first_name);
+    expect(createResult.id).toBeDefined();
+    expect(getCreated).toEqual(createResult);
   });
 
   /**
     it("should get all user and update the user first_name", async (): Promise<void> => {
-      const getAllUsers = await model.index();
-      const { last_name, user_name, password, id } = getAllUsers[0];
+      const getAll = await model.index();
+      const { last_name, user_name, password, id } = getAll[0];
   
-      expect(user_name).toEqual(user1.user_name);
+      expect(user_name).toEqual(user3.user_name);
       expect(editedUserResult.first_name).toEqual("Helen");
     });
   */
 
   // INDEX
   it("index method should return a list of users", async (): Promise<void> => {
-    const getAllUsers = await model.index();
+    const getAll = await model.index();
 
-    expect(getAllUsers.length).toBe(1);
-    expect(getAllUsers[0].first_name).toEqual(user1.first_name);
-    expect(getAllUsers[0].last_name).toEqual(user1.last_name);
-    expect(getAllUsers[0].user_name).toEqual(user1.user_name);
+    expect(getAll.length).toBe(1);
+    expect(getAll[0].first_name).toEqual(user3.first_name);
+    expect(getAll[0].last_name).toEqual(user3.last_name);
+    expect(getAll[0].user_name).toEqual(user3.user_name);
   });
 
   // SHOW
   it("show method should return the correct user", async (): Promise<void> => {
-    const user = await model.show(user1.id as unknown as number);
+    const user = await model.show(user3.id as unknown as number);
 
-    expect(user.first_name).toEqual(user1.first_name);
-    expect(user.last_name).toEqual(user1.last_name);
-    expect(user.user_name).toEqual(user1.user_name);
+    expect(user.first_name).toEqual(user3.first_name);
+    expect(user.last_name).toEqual(user3.last_name);
+    expect(user.user_name).toEqual(user3.user_name);
   });
 
   // DELETE
   it("delete method should remove the user", async (): Promise<void> => {
-    const createUserResult = await model.create(user2);
+    const createUserResult = await model.create(user4);
     const deleteUserResult = await model.delete(
       createUserResult.id as unknown as number
     );

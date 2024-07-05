@@ -24,37 +24,37 @@ describe("Product Model Test Suite", (): void => {
   // CREATE
   it("create method should add a product", async (): Promise<void> => {
     product1 = await model.create({
-      name: "Penne Pasta",
+      name: "Log Splitter",
       price: 80,
-      category: "food",
+      category: "timber",
     });
-    expect(product1.name).toEqual("Penne Pasta");
+    expect(product1.name).toEqual("Log Splitter");
     expect(product1.price).toEqual(80);
-    expect(product1.category).toEqual("food");
+    expect(product1.category).toEqual("timber");
     expect(product1.id).toBeDefined();
 
     product2 = await model.create({
-      name: "Vanilla Ice cream",
+      name: "Rear-Tine Tiller",
       price: 100,
-      category: "dessert",
+      category: "garden",
     });
-    expect(product2.name).toEqual("Vanilla Ice cream");
+    expect(product2.name).toEqual("Rear-Tine Tiller");
     expect(product2.price).toEqual(100);
-    expect(product2.category).toEqual("dessert");
+    expect(product2.category).toEqual("garden");
     expect(product2.id).toBeDefined();
   });
 
   // INDEX
   it("index method should return a list of products", async (): Promise<void> => {
-    const getAllProducts = await model.index();
+    const getAll = await model.index();
 
-    expect(getAllProducts.length).toBe(2);
-    expect(getAllProducts[0].name).toEqual(product1.name);
-    expect(getAllProducts[1].name).toEqual(product2.name);
-    expect(getAllProducts[0].price).toEqual(product1.price);
-    expect(getAllProducts[1].price).toEqual(product2.price);
-    expect(getAllProducts[0].category).toEqual(product1.category);
-    expect(getAllProducts[1].category).toEqual(product2.category);
+    expect(getAll.length).toBe(2);
+    expect(getAll[0].name).toEqual(product1.name);
+    expect(getAll[1].name).toEqual(product2.name);
+    expect(getAll[0].price).toEqual(product1.price);
+    expect(getAll[1].price).toEqual(product2.price);
+    expect(getAll[0].category).toEqual(product1.category);
+    expect(getAll[1].category).toEqual(product2.category);
   });
 
   // SHOW
