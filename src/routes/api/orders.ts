@@ -5,7 +5,7 @@ import OrderHandler from "../../handlers/order";
 const orders = express.Router();
 const orderHandler = new OrderHandler();
 
-//Add Products
+// ADD PRODUCT
 orders.post("/addProduct", authenticate, (request, response) => {
   orderHandler.addProduct(request, response);
 });
@@ -19,6 +19,15 @@ orders.post("/:user_id", authenticate, (request, response) => {
 orders.delete("/:id", authenticate, (request, response) => {
   orderHandler.delete(request, response);
 });
+
+// GET ORDER BY USER ID
+orders.get(
+  "/getOrdersByUserID/:id/:status",
+  authenticate,
+  (request, response) => {
+    orderHandler.getOrdersByUserID(request, response);
+  }
+);
 
 // INDEX
 orders.get("/", authenticate, (request, response) => {

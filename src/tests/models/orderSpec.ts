@@ -127,6 +127,7 @@ describe("Order Model Test Suite", (): void => {
     expect(order.status).toEqual(order1.status);
   });
 
+  // ADD PRODUCT
   it("addProduct method should add product to the order", async (): Promise<void> => {
     const addedProduct = await model.addProduct({
       product_id: product3.id as unknown as number,
@@ -138,6 +139,26 @@ describe("Order Model Test Suite", (): void => {
       order1.id as unknown as number
     );
     expect(addedProduct.quantity).toEqual(1);
+  });
+
+  // GET ORDER BY USER ID
+  it("getOrdersByUserID method should get order", async (): Promise<void> => {
+    const activeOrder = await model.getOrdersByUserID(
+      "active",
+      user1.id as unknown as number
+    );
+    expect(activeOrder.length).toEqual(3);
+    expect(Number(activeOrder[0].id)).toEqual(order1.id as unknown as number);
+
+    const completedOrder = await model.getOrdersByUserID(
+      "completed",
+      user2.id as unknown as number
+    );
+
+    expect(completedOrder.length).toEqual(2);
+    expect(Number(completedOrder[0].id)).toEqual(
+      order2.id as unknown as number
+    );
   });
 
   // DELETE

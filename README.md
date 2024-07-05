@@ -105,7 +105,7 @@ Server will be running on port 3000
 #### Orders
 - GET http://localhost:3000/api/orders -Index [token required]
 - GET http://localhost:3000/api/orders/:id -Show order by user_id [token required].
-- GET http://localhost:3000/api/orders/getOrderByStatus/:id/:status - Orders by status and user_id [token required]
+- GET http://localhost:3000/api/orders/getOrdersByUserID/:id/:status - Orders by status and user_id [token required]
 - PUT http://localhost:3000/api/orders/status/:user_id - Update order status [token required]
 - DELETE http://localhost:3000/api/orders/:id -Delete order by order_id [token required]
 - POST http://localhost:3000/api/orders/addProduct -Add products to order [token required]. Parameters are: `product_id`, `order_id` and `quantity`

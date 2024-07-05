@@ -4,6 +4,8 @@ import { OrderModel } from "../models/order";
 const model = new OrderModel();
 
 export default class OrderHandler {
+
+  // ADD PRODUCT
   async addProduct(_request: Request, response: Response) {
     try {
       const { order_id, product_id, quantity } = _request.body;
@@ -86,6 +88,27 @@ export default class OrderHandler {
       response
         .status(500)
         .json(`error while fetching order list: ${error}`);
+    }
+  }
+
+  // GET ORDER BY USER ID
+  async getOrdersByUserID(_request: Request, response: Response) {
+    const { status, id } = _request.params;
+
+    try {
+      const orders = await model.getOrdersByUserID(status, Number(id));
+      if (orders.length < 1)
+        return response
+          .status(200)
+          .json({ message: `There are no orders in ${status} status`, });
+
+      response
+        .status(200)
+        .json(orders);
+    } catch (error) {
+      response
+        .status(500)
+        .json(`error while fetching the order by status [${status}]: ${error}`);
     }
   }
 

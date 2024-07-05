@@ -98,6 +98,22 @@ export class OrderModel {
     }
   }
 
+  // GET ORDER BY USER ID
+  async getOrdersByUserID(status: string, user_id: number): Promise<Order[]> {
+    try {
+      const connection = await client.connect();
+      const sql = `SELECT o.id, p.name as product_name, op.quantity FROM orders o INNER JOIN order_products op ON o.id = op.order_id
+                INNER JOIN products p ON p.id = op.product_id  WHERE LOWER(status) = LOWER('${status}') AND user_id = ${user_id}`;
+
+      const result = await connection.query(sql);
+      connection.release();
+
+      return result.rows;
+    } catch (err) {
+      throw new Error(`Unable to get orders based on status[${status}]. Error: ${err}`);
+    }
+  }
+
   // INDEX
   async index(): Promise<Order[]> {
     try {

@@ -74,4 +74,4 @@ User:
 
 Order:
 - Current Order by user - GET /api/orders/:id (args: user_id) [token required]
-- Completed Orders by user - GET /api/orders//getOrderByStatus/:id/:status (args: user_id and status as completed) [token required]
+- Completed Orders by user - GET /api/orders//getOrdersByUserID/:id/:status (args: user_id and status as completed) [token required]
