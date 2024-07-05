@@ -30,6 +30,7 @@ users.get("/:id", authenticate, (request, response) => {
   userHandler.show(request, response);
 });
 
+users.put("/:id", authenticate, (request, response) => {
   userHandler.update(request, response);
 });
 

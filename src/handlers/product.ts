@@ -65,6 +65,7 @@ export default class ProductHandler {
     }
   }
 
+  async getPopularProducts(_request: Request, response: Response) {
     try {
       const products = await model.getPopularProducts();
       response

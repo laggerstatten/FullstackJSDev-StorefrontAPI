@@ -70,7 +70,6 @@ export default class UserHandler {
     }
   }
 
-        );
   async login(_request: Request, response: Response) {
     try {
       const { user_name, password } = _request.body;

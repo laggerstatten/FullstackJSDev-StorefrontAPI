@@ -28,7 +28,6 @@ describe("User Endpoint Test Suite", (): void => {
   // INDEX
   it("index endpoint should return a list of users. GET /api/users/:id", async (): Promise<void> => {
     const response = await request
-      .get("/api/users/")
       .get(`/api/users/${user.id}`)
       .set("Authorization", token);
 

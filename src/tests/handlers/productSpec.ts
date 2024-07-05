@@ -9,7 +9,6 @@ const request = supertest(app);
 describe("Product Endpoint Test Suite", (): void => {
   let token: string;
   let user: User;
-  let product: Product;
   let product1: Product;
   let product2: Product;
 

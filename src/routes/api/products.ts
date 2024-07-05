@@ -6,6 +6,7 @@ const products = express.Router();
 const productHandler = new ProductHandler();
 
 // CREATE
+products.post("/create", authenticate, (request, response) => {
   productHandler.create(request, response);
 });
 
@@ -24,6 +25,7 @@ products.get("/", (request, response) => {
 });
 
 // SHOW
+products.get("/popular", (request, response) => {
   productHandler.getPopularProducts(request, response);
 });
 
@@ -31,6 +33,7 @@ products.get("/:id", (request, response) => {
   productHandler.show(request, response);
 });
 
+products.put("/:id", (request, response) => {
   productHandler.update(request, response);
 });
 

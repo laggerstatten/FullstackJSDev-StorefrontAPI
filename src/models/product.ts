@@ -96,6 +96,7 @@ export class ProductModel {
 
   /**
    * Get all the products from database
+   * @return {Product[]} list of products.
    */
   async index(): Promise<Product[]> {
     try {

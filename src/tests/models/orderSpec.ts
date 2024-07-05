@@ -76,7 +76,6 @@ describe("Order Model Test Suite", (): void => {
       products: [
         {
           product_id: product1.id as unknown as number,
-          quantity: 1,
           quantity: 2,
         },
         {
