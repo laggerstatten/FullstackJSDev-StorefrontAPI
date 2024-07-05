@@ -28,6 +28,7 @@ describe("Product Model Test Suite", (): void => {
       price: 80,
       category: "timber",
     });
+
     expect(product1.name).toEqual("Log Splitter");
     expect(product1.price).toEqual(80);
     expect(product1.category).toEqual("timber");

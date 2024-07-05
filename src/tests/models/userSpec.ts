@@ -37,15 +37,15 @@ describe("User Model Test Suite", (): void => {
 
   // CREATE
   it("create method should add a user", async (): Promise<void> => {
-    const createResult = await model.create(user3);
+    user1 = await model.create(user3);
     const getCreated = await model.show(
-      createResult.id as unknown as number
+      user1.id as unknown as number
     );
 
-    expect(createResult.user_name).toEqual(user3.user_name);
-    expect(createResult.first_name).toEqual(user3.first_name);
-    expect(createResult.id).toBeDefined();
-    expect(getCreated).toEqual(createResult);
+    expect(user1.user_name).toEqual(user3.user_name);
+    expect(user1.first_name).toEqual(user3.first_name);
+    expect(user1.id).toBeDefined();
+    expect(getCreated).toEqual(user1);
   });
 
   /**
@@ -70,11 +70,11 @@ describe("User Model Test Suite", (): void => {
 
   // SHOW
   it("show method should return the correct user", async (): Promise<void> => {
-    const user = await model.show(user3.id as unknown as number);
+    const user = await model.show(user1.id as unknown as number);
 
-    expect(user.first_name).toEqual(user3.first_name);
-    expect(user.last_name).toEqual(user3.last_name);
-    expect(user.user_name).toEqual(user3.user_name);
+    expect(user.first_name).toEqual(user1.first_name);
+    expect(user.last_name).toEqual(user1.last_name);
+    expect(user.user_name).toEqual(user1.user_name);
   });
 
   // DELETE
