@@ -30,9 +30,4 @@ users.get("/:id", authenticate, (request, response) => {
   userHandler.show(request, response);
 });
 
-//Edit user based on user id
-users.put("/:id", authenticate, (request, response) => {
-  userHandler.update(request, response);
-});
-
 export default users;

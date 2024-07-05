@@ -88,20 +88,22 @@ describe("Product Endpoint Test Suite", (): void => {
     expect(response.body[1].category).toEqual("food");
   });
 
-  it("should update a product. PUT /api/products/:id", async (): Promise<void> => {
-    const response = await request
-      .put(`/api/products/${product2.id}`)
-      .set("Authorization", token)
-      .send({
-        name: "Johnson Baby oil",
-        price: 52,
-        category: "toiletries",
-      });
-
-    expect(response.body.name).toEqual("Johnson Baby oil");
-    expect(response.body.price).toEqual(52);
-    expect(response.body.category).toEqual("toiletries");
-  });
+  /**
+    it("should update a product. PUT /api/products/:id", async (): Promise<void> => {
+      const response = await request
+        .put(`/api/products/${product2.id}`)
+        .set("Authorization", token)
+        .send({
+          name: "Johnson Baby oil",
+          price: 52,
+          category: "toiletries",
+        });
+  
+      expect(response.body.name).toEqual("Johnson Baby oil");
+      expect(response.body.price).toEqual(52);
+      expect(response.body.category).toEqual("toiletries");
+    });
+  */
 
   // Clean up
   afterAll(async () => {

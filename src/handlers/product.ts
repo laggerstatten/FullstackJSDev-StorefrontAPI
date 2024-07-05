@@ -65,40 +65,6 @@ export default class ProductHandler {
     }
   }
 
-  async getPopularProducts(_request: Request, response: Response) {
-    try {
-      const products = await model.getPopularProducts();
-      response
-        .status(200)
-        .json(products);
-    } catch (error) {
-      response
-        .status(500)
-        .json(`error while fetching the popular product names: ${error}`);
-    }
-  }
-
-  async getProductsByCategory(_request: Request, response: Response) {
-    const { category } = _request.params;
-
-    try {
-      const products = await model.getProductsByCategory(category);
-      //If product is empty check
-      if (products.length < 1)
-        return response
-          .status(401)
-          .json({ error: "Provide a valid category or there are no products in this category", });
-
-      response
-        .status(200)
-        .json(products);
-    } catch (error) {
-      response
-        .status(500)
-        .json(`error while fetching the product by category [${category}]: ${error}`);
-    }
-  }
-
   // SHOW
   async show(_request: Request, response: Response) {
     try {
@@ -114,25 +80,4 @@ export default class ProductHandler {
     }
   }
 
-  async update(_request: Request, response: Response) {
-    try {
-      const { id } = _request.params;
-      const { name, price, category } = _request.body;
-
-      const product = await model.update({
-        id: Number(id),
-        name,
-        price: Number(price),
-        category,
-      });
-
-      response
-        .status(200)
-        .json(product);
-    } catch (error) {
-      response
-        .status(500)
-        .json(`error while updating the product: ${error}`);
-    }
-  }
 }

@@ -50,7 +50,7 @@ describe("User Endpoint Test Suite", (): void => {
   // Clean up
   afterAll(async () => {
     await request
-      .delete("/api/users")
+      .delete("/api/users/")
       .send({ id: user.id })
       .set("Authorization", token);
   });

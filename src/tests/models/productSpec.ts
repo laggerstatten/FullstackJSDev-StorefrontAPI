@@ -17,16 +17,12 @@ describe("Product Model Test Suite", (): void => {
     expect(model.show).toBeDefined();
   });
 
-  it("should have update method", () => {
-    expect(model.update).toBeDefined();
-  });
-
   it("should have delete method", () => {
     expect(model.delete).toBeDefined();
   });
 
   // CREATE
-  it("should create a product", async (): Promise<void> => {
+  it("create method should add a product", async (): Promise<void> => {
     product1 = await model.create({
       name: "Penne Pasta",
       price: 80,
@@ -48,7 +44,8 @@ describe("Product Model Test Suite", (): void => {
     expect(product2.id).toBeDefined();
   });
 
-  it("should get all products", async (): Promise<void> => {
+  // INDEX
+  it("index method should get all products", async (): Promise<void> => {
     const getAllProducts = await model.index();
 
     expect(getAllProducts.length).toBe(2);
@@ -60,8 +57,8 @@ describe("Product Model Test Suite", (): void => {
     expect(getAllProducts[1].category).toEqual(product2.category);
   });
 
-  // INDEX
-  it("should get product based on id", async (): Promise<void> => {
+  // SHOW
+  it("show method should return the correct product", async (): Promise<void> => {
     const product = await model.show(product1.id as unknown as number);
 
     expect(product.name).toEqual(product1.name);
@@ -69,22 +66,8 @@ describe("Product Model Test Suite", (): void => {
     expect(product.category).toEqual(product1.category);
   });
 
-  // SHOW
-  it("should update product based on id", async (): Promise<void> => {
-    const product = await model.update({
-      id: product1.id,
-      name: "Chocolate Ice cream",
-      price: 60,
-      category: "dessert",
-    });
-
-    expect(product.name).toEqual("Chocolate Ice cream");
-    expect(product.price).toEqual(60);
-    expect(product.category).toEqual("dessert");
-  });
-
   // DELETE
-  it("should delete the user", async (): Promise<void> => {
+  it("delete method should remove the user", async (): Promise<void> => {
     await model.delete(product1.id as unknown as number);
     const result = await model.index();
 

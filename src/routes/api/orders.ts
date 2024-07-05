@@ -20,15 +20,6 @@ orders.delete("/deleteOrder/:id", authenticate, (request, response) => {
   orderHandler.delete(request, response);
 });
 
-//get orders based on status and user id
-orders.get(
-  "/getOrderByStatus/:id/:status",
-  authenticate,
-  (request, response) => {
-    orderHandler.getOrderByStatus(request, response);
-  }
-);
-
 // INDEX
 orders.get("/", authenticate, (request, response) => {
   orderHandler.index(request, response);
@@ -37,11 +28,6 @@ orders.get("/", authenticate, (request, response) => {
 // SHOW
 orders.get("/:id", authenticate, (request, response) => {
   orderHandler.show(request, response);
-});
-
-//Update status of the order
-orders.put("/status/:user_id", authenticate, (request, response) => {
-  orderHandler.updateOrderStatus(request, response);
 });
 
 export default orders;

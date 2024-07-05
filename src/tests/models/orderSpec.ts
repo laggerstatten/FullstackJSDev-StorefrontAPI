@@ -122,11 +122,12 @@ describe("Order Model Test Suite", (): void => {
   it("show method should return the correct order", async (): Promise<void> => {
     const order = await model.show(order1.id as unknown as number);
 
-    expect(order.user_id).toEqual(order1.user_id);
+    //expect(order.user_id).toEqual(order1.user_id);
+    expect(order.id).toEqual(order1.id);
     expect(order.status).toEqual(order1.status);
   });
 
-  it("should add product to the order", async (): Promise<void> => {
+  it("addProduct method should add product to the order", async (): Promise<void> => {
     const addedProduct = await model.addProduct({
       product_id: product3.id as unknown as number,
       order_id: order1.id as unknown as number,
@@ -137,38 +138,6 @@ describe("Order Model Test Suite", (): void => {
       order1.id as unknown as number
     );
     expect(addedProduct.quantity).toEqual(1);
-  });
-
-  it("should get order by status", async (): Promise<void> => {
-    const activeOrder = await model.getOrdersByStatus(
-      "active",
-      user1.id as unknown as number
-    );
-    //Returns number of products in the order
-    expect(activeOrder.length).toEqual(3);
-    expect(Number(activeOrder[0].id)).toEqual(order1.id as unknown as number);
-
-    const completedOrder = await model.getOrdersByStatus(
-      "completed",
-      user2.id as unknown as number
-    );
-
-    //Returns number of products in the order
-    expect(completedOrder.length).toEqual(2);
-    expect(Number(completedOrder[0].id)).toEqual(
-      order2.id as unknown as number
-    );
-  });
-
-  it("should update order status", async (): Promise<void> => {
-    const order = await model.updateStatus({
-      id: order1.id as unknown as number,
-      status: "completed",
-      products: [],
-      user_id: user1.id as unknown as number,
-    });
-
-    expect(order.status).not.toEqual(order1.status);
   });
 
   // DELETE

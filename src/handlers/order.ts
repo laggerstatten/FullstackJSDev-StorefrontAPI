@@ -89,26 +89,6 @@ export default class OrderHandler {
     }
   }
 
-  async getOrderByStatus(_request: Request, response: Response) {
-    const { status, id } = _request.params;
-    try {
-      const orders = await model.getOrdersByStatus(status, Number(id));
-      //If product is empty check
-      if (orders.length < 1)
-        return response
-          .status(200)
-          .json({ message: `There are no orders in ${status} status`, });
-
-      response
-        .status(200)
-        .json(orders);
-    } catch (error) {
-      response
-        .status(500)
-        .json(`error while fetching the order by status [${status}]: ${error}`);
-    }
-  }
-
   // SHOW
   async show(_request: Request, response: Response) {
     try {
@@ -124,29 +104,4 @@ export default class OrderHandler {
     }
   }
 
-  async updateOrderStatus(_request: Request, response: Response) {
-    try {
-      const { user_id } = _request.params;
-      const { status, id } = _request.body;
-      if (status && id && user_id) {
-        const updatedOrder = await model.updateStatus({
-          id: id as unknown as number,
-          status,
-          products: [],
-          user_id: user_id as unknown as number,
-        });
-        response
-          .status(200)
-          .json({ message: "Order status has been updated successfully", order: updatedOrder, });
-      } else {
-        response
-          .status(400)
-          .json({ error: "status and id are required to update an order", });
-      }
-    } catch (error) {
-      response
-        .status(500)
-        .json(`error while updating order: ${error}`);
-    }
-  }
 }
