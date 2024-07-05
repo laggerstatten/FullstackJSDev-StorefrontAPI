@@ -1,54 +1,140 @@
-# Storefront Backend Project
+# Storefront Backend Instructions
 
-## Getting Started
+### Setting up the environment
+Create a file named '.env' and add the below environment variables.
 
-This repo contains a basic Node and Express app to get you started in constructing an API. To get started, clone this repo and run `yarn` in your terminal at the project root.
+```
+POSTGRES_HOST = 127.0.0.1
+POSTGRES_DB = equipment_shop
+POSTGRES_TEST_DB = equipment_shop_test
+POSTGRES_USER = test_user
+POSTGRES_PASSWORD = password123
+ENV = dev
+BCRYPT_PASSWORD = test_bcrypt_password
+SALT_ROUNDS = 10
+TOKEN_SECRET = test_token_secret
+```
 
-## Required Technologies
-Your application must make use of the following libraries:
-- Postgres for the database
-- Node/Express for the application logic
-- dotenv from npm for managing environment variables
-- db-migrate from npm for migrations
-- jsonwebtoken from npm for working with JWTs
-- jasmine from npm for testing
+### Check to see if conflicting databases or users are already created
 
-## Steps to Completion
+In a GitBash terminal, run the following:
 
-### 1. Plan to Meet Requirements
+```
+  psql postgres
+```
 
-In this repo there is a `REQUIREMENTS.md` document which outlines what this API needs to supply for the frontend, as well as the agreed upon data shapes to be passed between front and backend. This is much like a document you might come across in real life when building or extending an API. 
+To see what databases already exist:
 
-Your first task is to read the requirements and update the document with the following:
-- Determine the RESTful route for each endpoint listed. Add the RESTful route and HTTP verb to the document so that the frontend developer can begin to build their fetch requests.    
-**Example**: A SHOW route: 'blogs/:id' [GET] 
+```
+  \l
+```
+```
+  DROP DATABASE equipment_shop;
+  DROP DATABASE equipment_shop_test;
+```
 
-- Design the Postgres database tables based off the data shape requirements. Add to the requirements document the database tables and columns being sure to mark foreign keys.   
-**Example**: You can format this however you like but these types of information should be provided
-Table: Books (id:varchar, title:varchar, author:varchar, published_year:varchar, publisher_id:string[foreign key to publishers table], pages:number)
+To see what roles already exist:
 
-**NOTE** It is important to remember that there might not be a one to one ratio between data shapes and database tables. Data shapes only outline the structure of objects being passed between frontend and API, the database may need multiple tables to store a single shape. 
+```
+  \du
+```
+```
+  DROP ROLE test_user;
+```
 
-### 2.  DB Creation and Migrations
 
-Now that you have the structure of the databse outlined, it is time to create the database and migrations. Add the npm packages dotenv and db-migrate that we used in the course and setup your Postgres database. If you get stuck, you can always revisit the database lesson for a reminder. 
+### Setting up postgres
 
-You must also ensure that any sensitive information is hashed with bcrypt. If any passwords are found in plain text in your application it will not pass.
+In a GitBash terminal, run the following:
 
-### 3. Models
+```
+  psql postgres
+```
+```
+  CREATE USER test_user CREATEDB CREATEROLE PASSWORD 'password123';
+  CREATE DATABASE equipment_shop WITH OWNER = test_user;
+  CREATE DATABASE equipment_shop_test WITH OWNER = test_user;
+```
+```
+  psql -h localhost -U test_user -d equipment_shop_test
+```
 
-Create the models for each database table. The methods in each model should map to the endpoints in `REQUIREMENTS.md`. Remember that these models should all have test suites and mocks.
+### Run Locally
 
-### 4. Express Handlers
+#### Scripts
 
-Set up the Express handlers to route incoming requests to the correct model method. Make sure that the endpoints you create match up with the enpoints listed in `REQUIREMENTS.md`. Endpoints must have tests and be CORS enabled. 
+Build script to compile TS to JS
+```
+  npm run build
+```
 
-### 5. JWTs
+Start the application after build
+```
+  npm run start
+```
 
-Add JWT functionality as shown in the course. Make sure that JWTs are required for the routes listed in `REQUIUREMENTS.md`.
+Run tests using Jasmine Library
+```
+  npm run test
+```
 
-### 6. QA and `README.md`
+## API Endpoints
+Server will be running on port 3000
 
-Before submitting, make sure that your project is complete with a `README.md`. Your `README.md` must include instructions for setting up and running your project including how you setup, run, and connect to your database. 
+### Products
 
-Before submitting your project, spin it up and test each endpoint. If each one responds with data that matches the data shapes from the `REQUIREMENTS.md`, it is ready for submission!
+#### GET /products
+- Returns a list of all the products in the database
+- GET http://localhost:3000/api/products -Index
+
+#### GET /products/:id
+- Returns details about a product in the database
+- GET http://localhost:3000/api/products/:id -Show
+
+#### POST /products
+- Adds a new product to the database, including the product's name, price, and category
+- POST http://localhost:3000/api/products -Create
+
+#### DELETE /products/:id
+- Deletes a product from the database
+- DELETE http://localhost:3000/api/products/:id -Delete
+
+### Users
+
+#### GET /users
+- Returns a list of all the users in the database
+- GET http://localhost:3000/api/users -Index
+
+#### GET /users/:id
+- Returns details about a user listed in the database
+- GET http://localhost:3000/api/users/:id -Show
+
+#### POST /users
+- Adds a new user to the database, including the users's first name, last name, username, and password
+- POST http://localhost:3000/api/users -Create
+
+#### DELETE /users/:id
+- Deletes a user from the database
+- DELETE http://localhost:3000/api/users/:id -Delete
+
+### Orders
+
+#### GET /orders
+- Returns a list of all the orders in the database
+- GET http://localhost:3000/api/orders -Index
+
+#### GET /orders/:id
+- Returns details about an order in the database
+- GET http://localhost:3000/api/orders/:id -Show
+
+#### POST /orders/:user_id
+- Adds a new order to the database, including the user id, the order's status, and an array of products
+- POST http://localhost:3000/api/orders/:user_id -Create
+
+#### DELETE /orders/:id
+- Deletes an order from the database
+- DELETE http://localhost:3000/api/orders/:id -Delete
+
+#### GET /orders/getOrdersByUserID/:id
+- Returns a list of the orders in the database associated with a user
+- GET http://localhost:3000/api/orders/getOrdersByUserID/:id
