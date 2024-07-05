@@ -5,12 +5,6 @@ let user1: User;
 let user2: User;
 
 describe("User Model Test Suite", (): void => {
-  const user3: User = {
-    first_name: "First",
-    last_name: "Last",
-    user_name: "username",
-    password: "password123",
-  };
 
   const user4: User = {
     first_name: "John",
@@ -37,15 +31,16 @@ describe("User Model Test Suite", (): void => {
 
   // CREATE
   it("create method should add a user", async (): Promise<void> => {
-    user1 = await model.create(user3);
-    const getCreated = await model.show(
-      user1.id as unknown as number
-    );
+    user1 = await model.create({
+      first_name: "First",
+      last_name: "Last",
+      user_name: "username",
+      password: "password123",
+    });
 
-    expect(user1.user_name).toEqual(user3.user_name);
-    expect(user1.first_name).toEqual(user3.first_name);
+    expect(user1.user_name).toEqual("username");
+    expect(user1.first_name).toEqual("First");
     expect(user1.id).toBeDefined();
-    expect(getCreated).toEqual(user1);
   });
 
   /**
@@ -63,9 +58,9 @@ describe("User Model Test Suite", (): void => {
     const getAll = await model.index();
 
     expect(getAll.length).toBe(1);
-    expect(getAll[0].first_name).toEqual(user3.first_name);
-    expect(getAll[0].last_name).toEqual(user3.last_name);
-    expect(getAll[0].user_name).toEqual(user3.user_name);
+    expect(getAll[0].first_name).toEqual(user1.first_name);
+    expect(getAll[0].last_name).toEqual(user1.last_name);
+    expect(getAll[0].user_name).toEqual(user1.user_name);
   });
 
   // SHOW

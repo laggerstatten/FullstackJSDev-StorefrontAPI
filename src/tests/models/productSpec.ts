@@ -51,10 +51,10 @@ describe("Product Model Test Suite", (): void => {
 
     expect(getAll.length).toBe(2);
     expect(getAll[0].name).toEqual(product1.name);
-    expect(getAll[1].name).toEqual(product2.name);
     expect(getAll[0].price).toEqual(product1.price);
-    expect(getAll[1].price).toEqual(product2.price);
     expect(getAll[0].category).toEqual(product1.category);
+    expect(getAll[1].name).toEqual(product2.name);
+    expect(getAll[1].price).toEqual(product2.price);
     expect(getAll[1].category).toEqual(product2.category);
   });
 
