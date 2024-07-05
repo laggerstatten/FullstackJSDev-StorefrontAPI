@@ -5,14 +5,6 @@ let user1: User;
 let user2: User;
 
 describe("User Model Test Suite", (): void => {
-
-  const user4: User = {
-    first_name: "John",
-    last_name: "Smith",
-    user_name: "nameuser",
-    password: "password456",
-  };
-
   it("should have an index method", () => {
     expect(model.index).toBeDefined();
   });
@@ -41,26 +33,29 @@ describe("User Model Test Suite", (): void => {
     expect(user1.user_name).toEqual("username");
     expect(user1.first_name).toEqual("First");
     expect(user1.id).toBeDefined();
-  });
 
-  /**
-    it("should get all user and update the user first_name", async (): Promise<void> => {
-      const getAll = await model.index();
-      const { last_name, user_name, password, id } = getAll[0];
-  
-      expect(user_name).toEqual(user3.user_name);
-      expect(editedUserResult.first_name).toEqual("Helen");
+    user2 = await model.create({
+      first_name: "John",
+      last_name: "Smith",
+      user_name: "nameuser",
+      password: "password456",
     });
-  */
+    expect(user2.user_name).toEqual("nameuser");
+    expect(user2.first_name).toEqual("John");
+    expect(user2.id).toBeDefined();
+  });
 
   // INDEX
   it("index method should return a list of users", async (): Promise<void> => {
     const getAll = await model.index();
 
-    expect(getAll.length).toBe(1);
+    expect(getAll.length).toBe(2);
     expect(getAll[0].first_name).toEqual(user1.first_name);
     expect(getAll[0].last_name).toEqual(user1.last_name);
     expect(getAll[0].user_name).toEqual(user1.user_name);
+    expect(getAll[1].first_name).toEqual(user2.first_name);
+    expect(getAll[1].last_name).toEqual(user2.last_name);
+    expect(getAll[1].user_name).toEqual(user2.user_name);
   });
 
   // SHOW
@@ -74,12 +69,10 @@ describe("User Model Test Suite", (): void => {
 
   // DELETE
   it("delete method should remove the user", async (): Promise<void> => {
-    const createUserResult = await model.create(user4);
-    const deleteUserResult = await model.delete(
-      createUserResult.id as unknown as number
-    );
+    await model.delete(user1.id as unknown as number);
+    const result = await model.index();
 
-    expect(deleteUserResult).toBeGreaterThan(0);
+    expect(result.length).toBe(1);
   });
 
   // Clean up

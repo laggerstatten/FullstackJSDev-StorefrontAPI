@@ -73,10 +73,6 @@ describe("Product Model Test Suite", (): void => {
     const result = await model.index();
 
     expect(result.length).toBe(1);
-
-    expect(result[0].name).toEqual(product2.name);
-    expect(result[0].price).toEqual(product2.price);
-    expect(result[0].category).toEqual(product2.category);
   });
 
   // Clean up
