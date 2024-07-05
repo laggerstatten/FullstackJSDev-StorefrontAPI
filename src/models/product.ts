@@ -29,35 +29,6 @@ export class ProductModel {
     }
   }
 
-  // DELETE
-  async delete(id: number): Promise<number> {
-    try {
-      const connection = await client.connect();
-      const sql = "DELETE FROM products WHERE id = ($1)";
-
-      const result = await connection.query(sql, [id]);
-      const count = result.rowCount;
-      connection.release();
-
-      return count;
-    } catch (err) {
-      throw new Error(`Unable to delete product ${id}. Error: ${err}`);
-    }
-  }
-
-  // DELETE ALL
-  async deleteAll(): Promise<void> {
-    try {
-      const connection = await client.connect();
-      const sql = "DELETE FROM products";
-
-      await connection.query(sql);
-      connection.release();
-    } catch (err) {
-      throw new Error(`Unable to delete all products. Error: ${err}`);
-    }
-  }
-
   // INDEX
   async index(): Promise<Product[]> {
     try {
@@ -87,5 +58,36 @@ export class ProductModel {
       throw new Error(`Unable to get product. Error: ${err}`);
     }
   }
+
+  // DELETE
+  async delete(id: number): Promise<number> {
+    try {
+      const connection = await client.connect();
+      const sql = "DELETE FROM products WHERE id = ($1)";
+
+      const result = await connection.query(sql, [id]);
+      const count = result.rowCount;
+
+      connection.release();
+
+      return count;
+    } catch (err) {
+      throw new Error(`Unable to delete product ${id}. Error: ${err}`);
+    }
+  }
+
+  // DELETE ALL
+  async deleteAll(): Promise<void> {
+    try {
+      const connection = await client.connect();
+      const sql = "DELETE FROM products";
+
+      await connection.query(sql);
+      connection.release();
+    } catch (err) {
+      throw new Error(`Unable to delete all products. Error: ${err}`);
+    }
+  }
+
 
 }

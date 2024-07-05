@@ -16,12 +16,14 @@ describe("Order Endpoint Test Suite", (): void => {
   let order2: Order;
 
   beforeAll(async () => {
-    let response = await request.post("/api/users/").send({
-      first_name: "Admin",
-      last_name: "Jones",
-      user_name: "admin",
-      password: "password789",
-    });
+    let response = await request
+      .post("/api/users/")
+      .send({
+        first_name: "Admin",
+        last_name: "Jones",
+        user_name: "admin",
+        password: "password789",
+      });
 
     token = response.body.token as string;
     admin = AuthenticationHelper.decodeToken(token) as User;
@@ -87,14 +89,13 @@ describe("Order Endpoint Test Suite", (): void => {
   });
 
   // GET ORDER BY USER ID
-  it("should get order based on userID. GET /api/orders/getOrdersByUserID/:id", async (): Promise<void> => {
+  it("getOrdersByUserID method should get order based on userID. GET /api/orders/getOrdersByUserID/:id", async (): Promise<void> => {
     const response = await request
       .get(`/api/orders/getOrdersByUserID/${admin.id}`)
       .set("Authorization", token);
     expect(response.status).toEqual(200);
     expect(response.body.length).toBeGreaterThanOrEqual(1);
   });
-
 
   // SHOW
   it("show endpoint should return the correct order. GET /api/orders/:id", async (): Promise<void> => {

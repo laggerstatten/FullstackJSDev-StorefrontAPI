@@ -35,6 +35,35 @@ export default class UserHandler {
     }
   }
 
+  // INDEX
+  async index(_request: Request, response: Response) {
+    try {
+      const users = await model.index();
+      response
+        .status(200)
+        .json(users);
+    } catch (error) {
+      response
+        .status(500)
+        .json(`error while fetching user list: ${error}`);
+    }
+  }
+
+  // SHOW
+  async show(_request: Request, response: Response) {
+    try {
+      const id = _request.params.id;
+      const users = await model.show(Number(id));
+      response
+        .status(200)
+        .json(users);
+    } catch (error) {
+      response
+        .status(500)
+        .json(`error while fetching the user: ${error}`);
+    }
+  }
+
   // DELETE
   async delete(_request: Request, response: Response) {
     try {
@@ -56,20 +85,7 @@ export default class UserHandler {
     }
   }
 
-  // INDEX
-  async index(_request: Request, response: Response) {
-    try {
-      const users = await model.index();
-      response
-        .status(200)
-        .json(users);
-    } catch (error) {
-      response
-        .status(500)
-        .json(`error while fetching user list: ${error}`);
-    }
-  }
-
+  // LOGIN
   async login(_request: Request, response: Response) {
     try {
       const { user_name, password } = _request.body;
@@ -104,19 +120,5 @@ export default class UserHandler {
     }
   }
 
-  // SHOW
-  async show(_request: Request, response: Response) {
-    try {
-      const id = _request.params.id;
-      const users = await model.show(Number(id));
-      response
-        .status(200)
-        .json(users);
-    } catch (error) {
-      response
-        .status(500)
-        .json(`error while fetching the user: ${error}`);
-    }
-  }
 
 }

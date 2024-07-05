@@ -1,5 +1,3 @@
-//TODO check udacity
-
 import { Request, Response, NextFunction } from "express";
 import { AuthenticationHelper } from "../helper/auth";
 

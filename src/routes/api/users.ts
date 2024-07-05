@@ -10,16 +10,6 @@ users.post("/", (request, response) => {
   userHandler.create(request, response);
 });
 
-// DELETE
-users.delete("/:id", authenticate, (request, response) => {
-  userHandler.delete(request, response);
-});
-
-//Login - verify password and generate token again
-users.post("/login", (request, response) => {
-  userHandler.login(request, response);
-});
-
 // INDEX
 users.get("/", authenticate, (request, response) => {
   userHandler.index(request, response);
@@ -28,6 +18,16 @@ users.get("/", authenticate, (request, response) => {
 // SHOW
 users.get("/:id", authenticate, (request, response) => {
   userHandler.show(request, response);
+});
+
+// DELETE
+users.delete("/:id", authenticate, (request, response) => {
+  userHandler.delete(request, response);
+});
+
+// LOGIN
+users.post("/login", (request, response) => {
+  userHandler.login(request, response);
 });
 
 export default users;

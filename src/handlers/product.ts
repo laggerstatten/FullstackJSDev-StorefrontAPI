@@ -30,27 +30,6 @@ export default class ProductHandler {
     }
   }
 
-  // DELETE
-  async delete(_request: Request, response: Response) {
-    try {
-      const { id } = _request.params;
-      const rowCount = await model.delete(Number(id));
-      if (rowCount > 0) {
-        response
-          .status(200)
-          .json({ message: `Successfully deleted product with id: ${id}` });
-      } else {
-        response
-          .status(400)
-          .json({ message: `Could not delete product with id: ${id}` });
-      }
-    } catch (error) {
-      response
-        .status(500)
-        .json(`error while deleting the product: ${error}`);
-    }
-  }
-
   // INDEX
   async index(_request: Request, response: Response) {
     try {
@@ -79,5 +58,27 @@ export default class ProductHandler {
         .json(`error while fetching the product: ${error}`);
     }
   }
+
+  // DELETE
+  async delete(_request: Request, response: Response) {
+    try {
+      const { id } = _request.params;
+      const rowCount = await model.delete(Number(id));
+      if (rowCount > 0) {
+        response
+          .status(200)
+          .json({ message: `Successfully deleted product with id: ${id}` });
+      } else {
+        response
+          .status(400)
+          .json({ message: `Could not delete product with id: ${id}` });
+      }
+    } catch (error) {
+      response
+        .status(500)
+        .json(`error while deleting the product: ${error}`);
+    }
+  }
+
 
 }

@@ -27,28 +27,28 @@ describe("Order Model Test Suite", (): void => {
     });
 
     user2 = await userModel.create({
-      first_name: "First 2",
-      last_name: "Last 2",
+      first_name: "User",
+      last_name: "Smith",
       user_name: "username2",
       password: "password456",
     });
 
     product1 = await productModel.create({
-      name: "Product Name",
-      price: 99,
+      name: "Wood Chipper",
+      price: 9999,
       category: "timber",
     });
 
     product2 = await productModel.create({
-      name: "Product Name 2",
-      price: 999,
-      category: "category2",
+      name: "Garden Tractor",
+      price: 99999,
+      category: "tractor",
     });
 
     product3 = await productModel.create({
-      name: "Product Name 3",
+      name: "Chainsaw",
       price: 9999,
-      category: "category3",
+      category: "timber",
     });
   });
 
@@ -113,8 +113,8 @@ describe("Order Model Test Suite", (): void => {
 
     expect(getAllOrders.length).toBe(2);
     expect(getAllOrders[0].user_id).toEqual(order1.user_id);
-    expect(getAllOrders[1].user_id).toEqual(order2.user_id);
     expect(getAllOrders[0].status).toEqual(order1.status);
+    expect(getAllOrders[1].user_id).toEqual(order2.user_id);
     expect(getAllOrders[1].status).toEqual(order2.status);
   });
 

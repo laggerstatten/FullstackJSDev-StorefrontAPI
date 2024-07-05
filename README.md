@@ -1,11 +1,7 @@
-# Storefront Backend Project
-
-## Getting Started
-
-This repo contains a basic Node and Express app to get you started in constructing an API. To get started, clone this repo and run `yarn` in your terminal at the project root.
+# Storefront Backend Instructions
 
 ### Setting up the environment
-After cloning/downloading this repo, create a file named '.env' and add the below environment variables.
+Create a file named '.env' and add the below environment variables.
 
 ```
 POSTGRES_HOST = 127.0.0.1
@@ -19,33 +15,51 @@ SALT_ROUNDS = 10
 TOKEN_SECRET = test_token_secret
 ```
 
+### Check to see if conflicting databases or users are already created
+
+In a GitBash terminal, run the following:
+
+```
+  psql postgres
+```
+
+To see what databases already exist:
+
+```
+  \l
+```
+```
+  DROP DATABASE equipment_shop;
+  DROP DATABASE equipment_shop_test;
+```
+
+To see what roles already exist:
+
+```
+  \du
+```
+```
+  DROP ROLE test_user;
+```
 
 
-### Setting up postgresql
-I'm using Windows OS, so all my commands will be related to that.
+### Setting up postgres
 
-1. Install the PostgreSQL from [here](https://www.postgresql.org/download/windows). Ignore if you have installed it already.
-2. Run `psql postgres` and login to the PostgreSQL database.
-3. Run `CREATE USER test_user CREATEDB CREATEROLE PASSWORD 'password123';` to create a user `test_user` with password `password123` and have privileges to create db and new role.
-4. Run `CREATE DATABASE equipment_shop WITH OWNER = test_user;` and `CREATE DATABASE equipment_shop_test WITH OWNER = test_user;` to create the database `equipment_shop` and `equipment_shop_test` is created for testing.
-5. Run `psql -h localhost -U test_user -d equipment_shop` in a new terminal to check if the user is able to access the database equipment_shop.
+In a GitBash terminal, run the following:
+
+```
+  psql postgres
+```
+```
+  CREATE USER test_user CREATEDB CREATEROLE PASSWORD 'password123';
+  CREATE DATABASE equipment_shop WITH OWNER = test_user;
+  CREATE DATABASE equipment_shop_test WITH OWNER = test_user;
+```
+```
+  psql -h localhost -U test_user -d equipment_shop_test
+```
 
 ### Run Locally
-
-Clone the project
-```
-  git clone https://github.com/renurevzranju/storefront-backend.git
-```
-
-Go to the project directory
-```
-  cd storefront-backend
-```
-
-Install dependencies
-```
-  npm install
-```
 
 #### Scripts
 
@@ -59,70 +73,68 @@ Start the application after build
   npm run start
 ```
 
-Start the application in watch mode
-```
-  npm run watch
-```
-
-Run Unit Test using Jasmine Library
+Run tests using Jasmine Library
 ```
   npm run test
 ```
 
-Format the code
-```
-  npm run prettier
-```
-
-Lint the code
-```
-  npm run lint
-```
-
-## Usage
-
+## API Endpoints
 Server will be running on port 3000
 
-### API Endpoints
+### Products
 
-#### Users
-- POST http://localhost:3000/api/users -Create. Parameters are `user_name`, `password`, `first_name` and `last_name. On successful creation, JWT token will be returned. Use this token for authentication of other routes
-- POST http://localhost:3000/api/users/login -Login. Parameters are `user_name` and `password`. on successful login, JWT token will generated and returned.
-- GET http://localhost:3000/api/users -Index [token required].
-- GET http://localhost:3000/api/users/:id -Show [token required]
-- PUT http://localhost:3000/api/users/:id -Edit [token required]
-- DELETE http://localhost:3000/api/users/:id -Delete [token required]
-
-#### Products
+#### GET /products
+- Returns a list of all the products in the database
 - GET http://localhost:3000/api/products -Index
+
+#### GET /products/:id
+- Returns details about a product in the database
 - GET http://localhost:3000/api/products/:id -Show
-- POST http://localhost:3000/api/products -Create [token required]. Parameters are: `name`, `price` and `category`.
-- GET http://localhost:3000/api/products/category/:category -Products by category
-- GET http://localhost:3000/api/products/popular -Top 5 popular products
-- PUT http://localhost:3000/api/products/:id -Edit. Parameters are: `name`, `price` and `category`.
+
+#### POST /products
+- Adds a new product to the database, including the product's name, price, and category
+- POST http://localhost:3000/api/products -Create
+
+#### DELETE /products/:id
+- Deletes a product from the database
 - DELETE http://localhost:3000/api/products/:id -Delete
 
-#### Orders
-- GET http://localhost:3000/api/orders -Index [token required]
-- GET http://localhost:3000/api/orders/:id -Show order by user_id [token required].
-- GET http://localhost:3000/api/orders/getOrdersByUserID/:id/:status - Orders by status and user_id [token required]
-- PUT http://localhost:3000/api/orders/status/:user_id - Update order status [token required]
-- DELETE http://localhost:3000/api/orders/:id -Delete order by order_id [token required]
-- POST http://localhost:3000/api/orders/addProduct -Add products to order [token required]. Parameters are: `product_id`, `order_id` and `quantity`
-- POST http://localhost:3000/api/orders/create/:user_id -Create [token required]. Parameters are: `status` and `products`. [`user_id`(provided in url)].
-```
-Create Order Example:
-{
-  "status": "active" // active or completed
-  "products": [
-    {
-      "product_id": 1,
-      "quantity": 3
-    },
-    {
-      "product_id": 2,
-      "quantity": 5
-    }
-  ]
-}
-```
+### Users
+
+#### GET /users
+- Returns a list of all the users in the database
+- GET http://localhost:3000/api/users -Index
+
+#### GET /users/:id
+- Returns details about a user listed in the database
+- GET http://localhost:3000/api/users/:id -Show
+
+#### POST /users
+- Adds a new user to the database, including the users's first name, last name, username, and password
+- POST http://localhost:3000/api/users -Create
+
+#### DELETE /users/:id
+- Deletes a user from the database
+- DELETE http://localhost:3000/api/users/:id -Delete
+
+### Orders
+
+#### GET /orders
+- Returns a list of all the orders in the database
+- GET http://localhost:3000/api/orders -Index
+
+#### GET /orders/:id
+- Returns details about an order in the database
+- GET http://localhost:3000/api/orders/:id -Show
+
+#### POST /orders/:user_id
+- Adds a new order to the database, including the user id, the order's status, and an array of products
+- POST http://localhost:3000/api/orders/:user_id -Create
+
+#### DELETE /orders/:id
+- Deletes an order from the database
+- DELETE http://localhost:3000/api/orders/:id -Delete
+
+#### GET /orders/getOrdersByUserID/:id
+- Returns a list of the orders in the database associated with a user
+- GET http://localhost:3000/api/orders/getOrdersByUserID/:id

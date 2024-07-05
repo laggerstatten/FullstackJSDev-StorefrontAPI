@@ -5,31 +5,6 @@ const model = new OrderModel();
 
 export default class OrderHandler {
 
-  // ADD PRODUCT
-  async addProduct(_request: Request, response: Response) {
-    try {
-      const { order_id, product_id, quantity } = _request.body;
-      if (order_id && product_id && quantity) {
-        const addProductToOrder = await model.addProduct({
-          order_id,
-          product_id,
-          quantity,
-        });
-        response
-          .status(200)
-          .json({ message: "Products are added successfully", products: addProductToOrder, });
-      } else {
-        response
-          .status(400)
-          .json({ message: "order_id, product_id and quantity are required to add a product to an order", });
-      }
-    } catch (error) {
-      response
-        .status(500)
-        .json(`error while adding product to the order: ${error}`);
-    }
-  }
-
   // CREATE
   async create(_request: Request, response: Response) {
     try {
@@ -56,6 +31,35 @@ export default class OrderHandler {
     }
   }
 
+  // INDEX
+  async index(_request: Request, response: Response) {
+    try {
+      const orders = await model.index();
+      response
+        .status(200)
+        .json(orders);
+    } catch (error) {
+      response
+        .status(500)
+        .json(`error while fetching order list: ${error}`);
+    }
+  }
+
+  // SHOW
+  async show(_request: Request, response: Response) {
+    try {
+      const id = _request.params.id;
+      const orders = await model.show(Number(id));
+      response
+        .status(200)
+        .json(orders);
+    } catch (error) {
+      response
+        .status(500)
+        .json(`error while fetching the order: ${error}`);
+    }
+  }
+
   // DELETE
   async delete(_request: Request, response: Response) {
     try {
@@ -77,17 +81,28 @@ export default class OrderHandler {
     }
   }
 
-  // INDEX
-  async index(_request: Request, response: Response) {
+  // ADD PRODUCT
+  async addProduct(_request: Request, response: Response) {
     try {
-      const orders = await model.index();
-      response
-        .status(200)
-        .json(orders);
+      const { order_id, product_id, quantity } = _request.body;
+      if (order_id && product_id && quantity) {
+        const addProductToOrder = await model.addProduct({
+          order_id,
+          product_id,
+          quantity,
+        });
+        response
+          .status(200)
+          .json({ message: "Products are added successfully", products: addProductToOrder, });
+      } else {
+        response
+          .status(400)
+          .json({ message: "order_id, product_id and quantity are required to add a product to an order", });
+      }
     } catch (error) {
       response
         .status(500)
-        .json(`error while fetching order list: ${error}`);
+        .json(`error while adding product to the order: ${error}`);
     }
   }
 
@@ -109,21 +124,6 @@ export default class OrderHandler {
       response
         .status(500)
         .json(`error while fetching the order by user id [${id}]: ${error}`);
-    }
-  }
-
-  // SHOW
-  async show(_request: Request, response: Response) {
-    try {
-      const id = _request.params.id;
-      const orders = await model.show(Number(id));
-      response
-        .status(200)
-        .json(orders);
-    } catch (error) {
-      response
-        .status(500)
-        .json(`error while fetching the order: ${error}`);
     }
   }
 
