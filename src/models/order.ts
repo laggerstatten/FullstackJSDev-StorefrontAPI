@@ -27,6 +27,7 @@ export class OrderModel {
    */
   async addProduct(product: OrderProduct): Promise<OrderProduct> {
     try {
+      // @ts-ignore
       const connection = await client.connect();
       const sql = `INSERT INTO order_products (order_id, product_id, quantity) VALUES(${Number(
         product.order_id
@@ -54,6 +55,7 @@ export class OrderModel {
    */
   async create(order: Order): Promise<Order> {
     try {
+      // @ts-ignore
       const connection = await client.connect();
       const sql = "INSERT INTO orders (status, user_id) VALUES($1, $2) RETURNING *";
 
@@ -85,6 +87,7 @@ export class OrderModel {
    */
   async delete(id: number): Promise<number> {
     try {
+      // @ts-ignore
       const connection = await client.connect();
       const sql = "DELETE FROM order_products WHERE order_id = ($1)";
 
@@ -108,6 +111,7 @@ export class OrderModel {
    */
   async deleteAll(): Promise<void> {
     try {
+      // @ts-ignore
       const connection = await client.connect();
       const sql = "DELETE FROM order_products";
 
@@ -130,6 +134,7 @@ export class OrderModel {
    */
   async getOrdersByStatus(status: string, user_id: number): Promise<Order[]> {
     try {
+      // @ts-ignore
       const connection = await client.connect();
       const sql = `SELECT o.id, p.name as product_name, op.quantity FROM orders o INNER JOIN order_products op ON o.id = op.order_id
                 INNER JOIN products p ON p.id = op.product_id  WHERE LOWER(status) = LOWER('${status}') AND user_id = ${user_id}`;
@@ -139,9 +144,7 @@ export class OrderModel {
 
       return result.rows;
     } catch (err) {
-      throw new Error(
-        `Unable to get orders based on status[${status}]. Error: ${err}`
-      );
+      throw new Error(`Unable to get orders based on status[${status}]. Error: ${err}`);
     }
   }
 
@@ -152,6 +155,7 @@ export class OrderModel {
    */
   async index(): Promise<Order[]> {
     try {
+      // @ts-ignore
       const connection = await client.connect();
       const sql = "SELECT * FROM orders";
 
@@ -172,6 +176,7 @@ export class OrderModel {
    */
   async show(id: number): Promise<Order> {
     try {
+      // @ts-ignore
       const connection = await client.connect();
       const sql = "SELECT * FROM orders WHERE user_id=($1)";
 
@@ -194,6 +199,7 @@ export class OrderModel {
    */
   async updateStatus(order: Order): Promise<Order> {
     try {
+      // @ts-ignore
       const connection = await client.connect();
       const sql = "UPDATE orders SET status = ($1) WHERE id=($2) RETURNING *";
 

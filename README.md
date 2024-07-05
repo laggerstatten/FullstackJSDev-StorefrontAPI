@@ -14,9 +14,9 @@ POSTGRES_TEST_DB = demostore_test
 POSTGRES_USER = demotest_user
 POSTGRES_PASSWORD = password123
 ENV = dev
-BCRYPT_PASSWORD = find_me_if_you_can
+BCRYPT_PASSWORD = test_bcrypt_password
 SALT_ROUNDS = 10
-TOKEN_SECRET = gryffindor
+TOKEN_SECRET = test_token_secret
 ```
 
 ### Setting up postgresql

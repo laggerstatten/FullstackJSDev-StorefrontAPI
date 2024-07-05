@@ -86,8 +86,7 @@ describe("Order Endpoint Test Suite", (): void => {
     order2 = response.body.order as Order;
   });
 
-  // INDEX
-  it("index endpoint should return a list of orders. GET /api/orders/getOrderByStatus/:id/active", async (): Promise<void> => {
+  it("should get order based on status. GET /api/orders/getOrderByStatus/:id/active", async (): Promise<void> => {
     const response = await request
       .get(`/api/orders/getOrderByStatus/${user.id}/active`)
       .set("Authorization", token);
@@ -113,7 +112,8 @@ describe("Order Endpoint Test Suite", (): void => {
     expect(Number(response.body.user_id)).toEqual(user.id as unknown as number);
   });
 
-  it("should get all orders. GET /api/orders/", async (): Promise<void> => {
+  // INDEX
+  it("index endpoint should return a list of orders. GET /api/orders/", async (): Promise<void> => {
     const response = await request
       .get("/api/orders/")
       .set("Authorization", token);

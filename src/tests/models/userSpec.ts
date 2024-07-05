@@ -51,7 +51,6 @@ describe("User Model Test Suite", (): void => {
   });
 
   // INDEX
-  // SHOW
   it("should get all user and update the user first_name", async (): Promise<void> => {
     const getAllUsers = await model.index();
     const { last_name, user_name, password, id } = getAllUsers[0];

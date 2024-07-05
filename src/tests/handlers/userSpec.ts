@@ -25,8 +25,8 @@ describe("User Endpoint Test Suite", (): void => {
     expect(user.id).toBeDefined();
   });
 
-  // INDEX
-  it("index endpoint should return a list of users. GET /api/users/:id", async (): Promise<void> => {
+  // SHOW
+  it("show endpoint should return the correct user. GET /api/users/:id", async (): Promise<void> => {
     const response = await request
       .get(`/api/users/${user.id}`)
       .set("Authorization", token);
@@ -36,8 +36,8 @@ describe("User Endpoint Test Suite", (): void => {
     expect(response.body.user_name).toEqual("aisha_blogs");
   });
 
-  // SHOW
-  it("show endpoint should return the correct user. GET /api/users/", async (): Promise<void> => {
+  // INDEX
+  it("index endpoint should return a list of users. GET /api/users/", async (): Promise<void> => {
     const response = await request
       .get("/api/users/")
       .set("Authorization", token);

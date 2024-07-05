@@ -22,6 +22,7 @@ export class UserModel {
    */
   async create(user: User): Promise<User> {
     try {
+      // @ts-ignore
       const connection = await client.connect();
       const sql = "INSERT INTO users (first_name, last_name, user_name, password) VALUES($1, $2, $3, $4) RETURNING *";
 
@@ -48,6 +49,7 @@ export class UserModel {
    */
   async delete(id: number): Promise<number> {
     try {
+      // @ts-ignore
       const connection = await client.connect();
       const sql = "DELETE FROM users WHERE id = ($1)";
 
@@ -67,6 +69,7 @@ export class UserModel {
    */
   async deleteAll(): Promise<void> {
     try {
+      // @ts-ignore
       const connection = await client.connect();
       const sql = "DELETE FROM users";
 
@@ -77,7 +80,6 @@ export class UserModel {
     }
   }
 
-  // INDEX
   /**
    * Get user based on user_name from the users table in the database
    * @param {string} user_name username of the user to be fetched.
@@ -85,6 +87,7 @@ export class UserModel {
    */
   async getUserByUserName(user_name: string): Promise<User> {
     try {
+      // @ts-ignore
       const connection = await client.connect();
       const sql = `SELECT * FROM users WHERE user_name='${user_name}'`;
 
@@ -97,12 +100,14 @@ export class UserModel {
     }
   }
 
+  // INDEX
   /**
    * Get all the users from database
    * @return {User[]} list of users.
    */
   async index(): Promise<User[]> {
     try {
+      // @ts-ignore
       const connection = await client.connect();
       const sql = "SELECT * FROM users";
 
@@ -123,6 +128,7 @@ export class UserModel {
    */
   async show(id: number): Promise<User> {
     try {
+      // @ts-ignore
       const connection = await client.connect();
       const sql = "SELECT * FROM users WHERE id=($1)";
 
@@ -147,6 +153,7 @@ export class UserModel {
    */
   async update(user: User): Promise<User> {
     try {
+      // @ts-ignore
       const connection = await client.connect();
       const sql = "UPDATE users set first_name = $2, last_name = $3, user_name = $4, password = $5 WHERE id = $1 RETURNING *";
 

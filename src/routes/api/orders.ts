@@ -20,7 +20,7 @@ orders.delete("/deleteOrder/:id", authenticate, (request, response) => {
   orderHandler.delete(request, response);
 });
 
-// INDEX
+//get orders based on status and user id
 orders.get(
   "/getOrderByStatus/:id/:status",
   authenticate,
@@ -29,6 +29,7 @@ orders.get(
   }
 );
 
+// INDEX
 orders.get("/", authenticate, (request, response) => {
   orderHandler.index(request, response);
 });
@@ -38,6 +39,7 @@ orders.get("/:id", authenticate, (request, response) => {
   orderHandler.show(request, response);
 });
 
+//Update status of the order
 orders.put("/status/:user_id", authenticate, (request, response) => {
   orderHandler.updateOrderStatus(request, response);
 });

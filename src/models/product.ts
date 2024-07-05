@@ -20,6 +20,7 @@ export class ProductModel {
    */
   async create(product: Product): Promise<Product> {
     try {
+      // @ts-ignore
       const connection = await client.connect();
       const sql = "INSERT INTO products (name, price, category) VALUES($1, $2, $3) RETURNING *";
 
@@ -45,6 +46,7 @@ export class ProductModel {
    */
   async delete(id: number): Promise<number> {
     try {
+      // @ts-ignore
       const connection = await client.connect();
       const sql = "DELETE FROM products WHERE id = ($1)";
 
@@ -64,6 +66,7 @@ export class ProductModel {
    */
   async deleteAll(): Promise<void> {
     try {
+      // @ts-ignore
       const connection = await client.connect();
       const sql = "DELETE FROM products";
 
@@ -82,6 +85,7 @@ export class ProductModel {
    */
   async getProductsByCategory(category: string): Promise<Product[]> {
     try {
+      // @ts-ignore
       const connection = await client.connect();
       const sql = `SELECT * FROM products WHERE LOWER(category) like LOWER('%${category}%')`;
 
@@ -100,6 +104,7 @@ export class ProductModel {
    */
   async index(): Promise<Product[]> {
     try {
+      // @ts-ignore
       const connection = await client.connect();
       const sql = "SELECT * FROM products";
 
@@ -121,8 +126,7 @@ export class ProductModel {
     try {
       // @ts-ignore
       const connection = await client.connect();
-      const sql =
-        "SELECT name, SUM(quantity) AS TotalQuantity FROM order_products, products WHERE order_products.product_id = products.id GROUP BY name ORDER BY SUM(quantity) DESC LIMIT 5";
+      const sql = "SELECT name, SUM(quantity) AS TotalQuantity FROM order_products, products WHERE order_products.product_id = products.id GROUP BY name ORDER BY SUM(quantity) DESC LIMIT 5";
 
       const result = await connection.query(sql);
       connection.release();
@@ -140,6 +144,7 @@ export class ProductModel {
    */
   async show(id: number): Promise<Product> {
     try {
+      // @ts-ignore
       const connection = await client.connect();
       const sql = "SELECT * FROM products WHERE id=($1)";
 
@@ -163,6 +168,7 @@ export class ProductModel {
    */
   async update(product: Product): Promise<Product> {
     try {
+      // @ts-ignore
       const connection = await client.connect();
       const sql = "UPDATE products set name = $2, price = $3, category = $4 WHERE id = $1 RETURNING *";
 

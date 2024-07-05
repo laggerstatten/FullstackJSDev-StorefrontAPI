@@ -69,7 +69,7 @@ describe("Order Model Test Suite", (): void => {
   });
 
   // CREATE
-  it("create method should add a order", async (): Promise<void> => {
+  it("create method should add an order", async (): Promise<void> => {
     order1 = await model.create({
       status: "active",
       user_id: user1.id as unknown as number,

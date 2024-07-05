@@ -62,8 +62,8 @@ describe("Product Endpoint Test Suite", (): void => {
     expect(product2.category).toEqual("food");
   });
 
-  // INDEX
-  it("index endpoint should return a list of products. GET /api/products/:id", async (): Promise<void> => {
+  // SHOW
+  it("show endpoint should return the correct product. GET /api/products/:id", async (): Promise<void> => {
     const response = await request
       .get(`/api/products/${product1.id}`)
       .set("Authorization", token);
@@ -73,8 +73,8 @@ describe("Product Endpoint Test Suite", (): void => {
     expect(response.body.category).toEqual("beverages");
   });
 
-  // SHOW
-  it("show endpoint should return the correct product. GET /api/products/", async (): Promise<void> => {
+  // INDEX
+  it("index endpoint should return a list of products. GET /api/products/", async (): Promise<void> => {
     const response = await request
       .get("/api/products/")
       .set("Authorization", token);

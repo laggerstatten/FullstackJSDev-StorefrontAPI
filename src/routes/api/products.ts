@@ -15,24 +15,27 @@ products.delete("/:id", (request, response) => {
   productHandler.delete(request, response);
 });
 
-// INDEX
+//get products based on category
 products.get("/category/:category", (request, response) => {
   productHandler.getProductsByCategory(request, response);
 });
 
+// INDEX
 products.get("/", (request, response) => {
   productHandler.index(request, response);
 });
 
-// SHOW
+//Get Top 5 popular products
 products.get("/popular", (request, response) => {
   productHandler.getPopularProducts(request, response);
 });
 
+// SHOW
 products.get("/:id", (request, response) => {
   productHandler.show(request, response);
 });
 
+//Edit product based on product id
 products.put("/:id", (request, response) => {
   productHandler.update(request, response);
 });
