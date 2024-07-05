@@ -144,21 +144,10 @@ describe("Order Model Test Suite", (): void => {
   // GET ORDER BY USER ID
   it("getOrdersByUserID method should get order", async (): Promise<void> => {
     const activeOrder = await model.getOrdersByUserID(
-      "active",
       user1.id as unknown as number
     );
     expect(activeOrder.length).toEqual(3);
     expect(Number(activeOrder[0].id)).toEqual(order1.id as unknown as number);
-
-    const completedOrder = await model.getOrdersByUserID(
-      "completed",
-      user2.id as unknown as number
-    );
-
-    expect(completedOrder.length).toEqual(2);
-    expect(Number(completedOrder[0].id)).toEqual(
-      order2.id as unknown as number
-    );
   });
 
   // DELETE

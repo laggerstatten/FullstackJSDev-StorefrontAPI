@@ -22,12 +22,9 @@ orders.delete("/:id", authenticate, (request, response) => {
 
 // GET ORDER BY USER ID
 orders.get(
-  "/getOrdersByUserID/:id/:status",
-  authenticate,
-  (request, response) => {
+  "/getOrdersByUserID/:id", authenticate, (request, response) => {
     orderHandler.getOrdersByUserID(request, response);
-  }
-);
+  });
 
 // INDEX
 orders.get("/", authenticate, (request, response) => {

@@ -87,9 +87,9 @@ describe("Order Endpoint Test Suite", (): void => {
   });
 
   // GET ORDER BY USER ID
-  it("should get order based on userID. GET /api/orders/getOrdersByUserID/:id/active", async (): Promise<void> => {
+  it("should get order based on userID. GET /api/orders/getOrdersByUserID/:id", async (): Promise<void> => {
     const response = await request
-      .get(`/api/orders/getOrdersByUserID/${admin.id}/active`)
+      .get(`/api/orders/getOrdersByUserID/${admin.id}`)
       .set("Authorization", token);
     expect(response.status).toEqual(200);
     expect(response.body.length).toBeGreaterThanOrEqual(1);

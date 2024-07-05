@@ -93,14 +93,14 @@ export default class OrderHandler {
 
   // GET ORDER BY USER ID
   async getOrdersByUserID(_request: Request, response: Response) {
-    const { status, id } = _request.params;
+    const { id } = _request.params;
 
     try {
-      const orders = await model.getOrdersByUserID(status, Number(id));
+      const orders = await model.getOrdersByUserID( Number(id));
       if (orders.length < 1)
         return response
           .status(200)
-          .json({ message: `There are no orders in ${status} status`, });
+          .json({ message: `There are no orders for user`, });
 
       response
         .status(200)
@@ -108,7 +108,7 @@ export default class OrderHandler {
     } catch (error) {
       response
         .status(500)
-        .json(`error while fetching the order by status [${status}]: ${error}`);
+        .json(`error while fetching the order by user id [${id}]: ${error}`);
     }
   }
 

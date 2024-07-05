@@ -29,24 +29,19 @@ To see what databases already exist:
 ```
   \l
 ```
+```
   DROP DATABASE equipment_shop;
   DROP DATABASE equipment_shop_test;
 ```
-
-```
-
-
 
 To see what roles already exist:
 
 ```
   \du
 ```
-
 ```
   DROP ROLE test_user;
 ```
-
 
 
 ### Setting up postgres
@@ -56,13 +51,11 @@ In a GitBash terminal, run the following:
 ```
   psql postgres
 ```
-
 ```
   CREATE USER test_user CREATEDB CREATEROLE PASSWORD 'password123';
   CREATE DATABASE equipment_shop WITH OWNER = test_user;
   CREATE DATABASE equipment_shop_test WITH OWNER = test_user;
 ```
-
 ```
   psql -h localhost -U test_user -d equipment_shop_test
 ```
@@ -144,5 +137,9 @@ Server will be running on port 3000
 #### DELETE /orders/:id
 - Deletes an order from the database
 - DELETE http://localhost:3000/api/orders/:id -Delete
+
+#### GET /orders/getOrdersByUserID/:id
+- Returns a list of the orders in the database associated with a user
+- GET http://localhost:3000/api/orders/getOrdersByUserID/:id
 
 
