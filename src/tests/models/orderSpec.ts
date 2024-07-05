@@ -36,7 +36,7 @@ describe("Order Model Test Suite", (): void => {
     product1 = await productModel.create({
       name: "Product Name",
       price: 99,
-      category: "category",
+      category: "timber",
     });
 
     product2 = await productModel.create({

@@ -8,20 +8,22 @@ const request = supertest(app);
 
 describe("Product Endpoint Test Suite", (): void => {
   let token: string;
-  let user: User;
+  let admin: User;
   let product1: Product;
   let product2: Product;
 
   beforeAll(async () => {
-    const response = await request.post("/api/users/").send({
-      first_name: "Admin",
-      last_name: "Jones",
-      user_name: "admin",
-      password: "password789",
-    });
+    const response = await request
+      .post("/api/users/")
+      .send({
+        first_name: "Admin",
+        last_name: "Jones",
+        user_name: "admin",
+        password: "password789",
+      });
 
     token = response.body.token as string;
-    user = AuthenticationHelper.decodeToken(token) as User;
+    admin = AuthenticationHelper.decodeToken(token) as User;
   });
 
 
@@ -30,9 +32,9 @@ describe("Product Endpoint Test Suite", (): void => {
     let response = await request
       .post("/api/products/")
       .send({
-        name: "New Product",
+        name: "Wood Chipper",
         price: 9999,
-        category: "category",
+        category: "timber",
       })
       .set("Authorization", token);
 
@@ -40,16 +42,16 @@ describe("Product Endpoint Test Suite", (): void => {
 
     expect(response.status).toEqual(200);
     expect(product1.id).toBeDefined();
-    expect(product1.name).toEqual("New Product");
+    expect(product1.name).toEqual("Wood Chipper");
     expect(product1.price).toEqual(9999);
-    expect(product1.category).toEqual("category");
+    expect(product1.category).toEqual("timber");
 
     response = await request
       .post("/api/products/")
       .send({
-        name: "New Product 2",
+        name: "Orchard Sprayer",
         price: 999,
-        category: "cat",
+        category: "fruit",
       })
       .set("Authorization", token);
 
@@ -57,9 +59,9 @@ describe("Product Endpoint Test Suite", (): void => {
 
     expect(response.status).toEqual(200);
     expect(product1.id).toBeDefined();
-    expect(product2.name).toEqual("New Product 2");
+    expect(product2.name).toEqual("Orchard Sprayer");
     expect(product2.price).toEqual(999);
-    expect(product2.category).toEqual("cat");
+    expect(product2.category).toEqual("fruit");
   });
 
   // SHOW
@@ -68,9 +70,9 @@ describe("Product Endpoint Test Suite", (): void => {
       .get(`/api/products/${product1.id}`)
       .set("Authorization", token);
 
-    expect(response.body.name).toEqual("New Product");
+    expect(response.body.name).toEqual("Wood Chipper");
     expect(response.body.price).toEqual(9999);
-    expect(response.body.category).toEqual("category");
+    expect(response.body.category).toEqual("timber");
   });
 
   // INDEX
@@ -80,46 +82,31 @@ describe("Product Endpoint Test Suite", (): void => {
       .set("Authorization", token);
 
     expect(response.status).toEqual(200);
-    expect(response.body[0].name).toEqual("New Product");
+    expect(response.body[0].name).toEqual("Wood Chipper");
     expect(response.body[0].price).toEqual(9999);
-    expect(response.body[0].category).toEqual("category");
-    expect(response.body[1].name).toEqual("New Product 2");
+    expect(response.body[0].category).toEqual("timber");
+    expect(response.body[1].name).toEqual("Orchard Sprayer");
     expect(response.body[1].price).toEqual(999);
-    expect(response.body[1].category).toEqual("cat");
+    expect(response.body[1].category).toEqual("fruit");
   });
 
-  /**
-    it("should update a product. PUT /api/products/:id", async (): Promise<void> => {
-      const response = await request
-        .put(`/api/products/${product2.id}`)
-        .set("Authorization", token)
-        .send({
-          name: "Johnson Baby oil",
-          price: 52,
-          category: "toiletries",
-        });
-  
-      expect(response.body.name).toEqual("Johnson Baby oil");
-      expect(response.body.price).toEqual(52);
-      expect(response.body.category).toEqual("toiletries");
-    });
-  */
+  // DELETE
+  it("delete endpoint should remove the products", async (): Promise<void> => {
+    let response = await request
+      .delete(`/api/products/${product1.id}`)
+      .set("Authorization", token);
+    expect(response.status).toEqual(200);
+
+    response = await request
+      .delete(`/api/products/${product2.id}`)
+      .set("Authorization", token);
+    expect(response.status).toEqual(200);
+  });
 
   // Clean up
   afterAll(async () => {
     await request
-      .delete("/api/products/")
-      .send({ id: product1.id })
-      .set("Authorization", token);
-
-    await request
-      .delete("/api/products/")
-      .send({ id: product2.id })
-      .set("Authorization", token);
-
-    await request
-      .delete("/api/users/")
-      .send({ id: user.id })
+      .delete(`/api/users/${admin.id}`)
       .set("Authorization", token);
   });
 });

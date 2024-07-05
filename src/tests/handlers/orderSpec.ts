@@ -9,7 +9,7 @@ const request = supertest(app);
 
 describe("Order Endpoint Test Suite", (): void => {
   let token: string;
-  let user: User;
+  let admin: User;
   let product1: Product;
   let product2: Product;
   let order1: Order;
@@ -24,14 +24,14 @@ describe("Order Endpoint Test Suite", (): void => {
     });
 
     token = response.body.token as string;
-    user = AuthenticationHelper.decodeToken(token) as User;
+    admin = AuthenticationHelper.decodeToken(token) as User;
 
     response = await request
       .post("/api/products/")
       .send({
-        name: "New Product",
+        name: "Wood Chipper",
         price: 9999,
-        category: "category",
+        category: "timber",
       })
       .set("Authorization", token);
 
@@ -40,9 +40,9 @@ describe("Order Endpoint Test Suite", (): void => {
     response = await request
       .post("/api/products/")
       .send({
-        name: "New Product 2",
+        name: "Orchard Sprayer",
         price: 999,
-        category: "cat",
+        category: "fruit",
       })
       .set("Authorization", token);
 
@@ -52,7 +52,7 @@ describe("Order Endpoint Test Suite", (): void => {
   // CREATE
   it("create endpoint should add an order: POST /api/orders/user_id", async (): Promise<void> => {
     let response = await request
-      .post(`/api/orders/${user.id}`)
+      .post(`/api/orders/${admin.id}`)
       .send({
         status: "active",
         products: [
@@ -71,7 +71,7 @@ describe("Order Endpoint Test Suite", (): void => {
     order1 = response.body.order as Order;
 
     response = await request
-      .post(`/api/orders/${user.id}`)
+      .post(`/api/orders/${admin.id}`)
       .send({
         status: "completed",
         products: [
@@ -166,7 +166,7 @@ describe("Order Endpoint Test Suite", (): void => {
 
     await request
       .delete("/api/users/")
-      .send({ id: user.id })
+      .send({ id: admin.id })
       .set("Authorization", token);
   });
 });
