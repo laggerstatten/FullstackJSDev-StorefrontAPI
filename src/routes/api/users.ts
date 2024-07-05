@@ -15,6 +15,11 @@ users.delete("/:id", authenticate, (request, response) => {
   userHandler.delete(request, response);
 });
 
+//Login - verify password and generate token again
+users.post("/login", (request, response) => {
+  userHandler.login(request, response);
+});
+
 // INDEX
 users.get("/", authenticate, (request, response) => {
   userHandler.index(request, response);
