@@ -27,7 +27,7 @@ describe("Order Endpoint Test Suite", (): void => {
     user = AuthenticationHelper.decodeToken(token) as User;
 
     response = await request
-      .post("/api/products/create")
+      .post("/api/products/")
       .send({
         name: "New Product",
         price: 9999,
@@ -38,7 +38,7 @@ describe("Order Endpoint Test Suite", (): void => {
     product1 = response.body.product as Product;
 
     response = await request
-      .post("/api/products/create")
+      .post("/api/products/")
       .send({
         name: "New Product 2",
         price: 999,
@@ -50,9 +50,9 @@ describe("Order Endpoint Test Suite", (): void => {
   });
 
   // CREATE
-  it("create endpoint should add an order: POST /api/orders/create/user_id", async (): Promise<void> => {
+  it("create endpoint should add an order: POST /api/orders/user_id", async (): Promise<void> => {
     let response = await request
-      .post(`/api/orders/create/${user.id}`)
+      .post(`/api/orders/${user.id}`)
       .send({
         status: "active",
         products: [
@@ -71,7 +71,7 @@ describe("Order Endpoint Test Suite", (): void => {
     order1 = response.body.order as Order;
 
     response = await request
-      .post(`/api/orders/create/${user.id}`)
+      .post(`/api/orders/${user.id}`)
       .send({
         status: "completed",
         products: [
@@ -142,12 +142,12 @@ describe("Order Endpoint Test Suite", (): void => {
 
   it("delete endpoint should remove the orders", async (): Promise<void> => {
     let response = await request
-      .delete(`/api/orders/deleteOrder/${order1.id}`)
+      .delete(`/api/orders/${order1.id}`)
       .set("Authorization", token);
     expect(response.status).toEqual(200);
 
     response = await request
-      .delete(`/api/orders/deleteOrder/${order2.id}`)
+      .delete(`/api/orders/${order2.id}`)
       .set("Authorization", token);
     expect(response.status).toEqual(200);
   });

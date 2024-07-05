@@ -11,12 +11,14 @@ describe("User Endpoint Test Suite", (): void => {
 
   // CREATE
   it("create endpoint should add a user: POST /api/users/", async (): Promise<void> => {
-    const response = await request.post("/api/users/").send({
-      first_name: "First",
-      last_name: "Last",
-      user_name: "username",
-      password: "password123",
-    });
+    const response = await request
+      .post("/api/users/")
+      .send({
+        first_name: "First",
+        last_name: "Last",
+        user_name: "username",
+        password: "password123",
+      });
 
     token = response.body.token as string;
     user = AuthenticationHelper.decodeToken(token);

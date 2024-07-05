@@ -26,9 +26,9 @@ describe("Product Endpoint Test Suite", (): void => {
 
 
   // CREATE
-  it("create endpoint should add a product: POST /api/products/create", async (): Promise<void> => {
+  it("create endpoint should add a product: POST /api/products/", async (): Promise<void> => {
     let response = await request
-      .post("/api/products/create")
+      .post("/api/products/")
       .send({
         name: "New Product",
         price: 9999,
@@ -45,7 +45,7 @@ describe("Product Endpoint Test Suite", (): void => {
     expect(product1.category).toEqual("category");
 
     response = await request
-      .post("/api/products/create")
+      .post("/api/products/")
       .send({
         name: "New Product 2",
         price: 999,
@@ -108,17 +108,17 @@ describe("Product Endpoint Test Suite", (): void => {
   // Clean up
   afterAll(async () => {
     await request
-      .delete("/api/products")
+      .delete("/api/products/")
       .send({ id: product1.id })
       .set("Authorization", token);
 
     await request
-      .delete("/api/products")
+      .delete("/api/products/")
       .send({ id: product2.id })
       .set("Authorization", token);
 
     await request
-      .delete("/api/users")
+      .delete("/api/users/")
       .send({ id: user.id })
       .set("Authorization", token);
   });

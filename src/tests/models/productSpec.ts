@@ -45,7 +45,7 @@ describe("Product Model Test Suite", (): void => {
   });
 
   // INDEX
-  it("index method should get all products", async (): Promise<void> => {
+  it("index method should return a list of products", async (): Promise<void> => {
     const getAllProducts = await model.index();
 
     expect(getAllProducts.length).toBe(2);

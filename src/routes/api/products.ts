@@ -6,7 +6,7 @@ const products = express.Router();
 const productHandler = new ProductHandler();
 
 // CREATE
-products.post("/create", authenticate, (request, response) => {
+products.post("/", authenticate, (request, response) => {
   productHandler.create(request, response);
 });
 
