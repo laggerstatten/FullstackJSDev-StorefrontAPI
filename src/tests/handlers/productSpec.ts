@@ -14,10 +14,10 @@ describe("Product Endpoint Test Suite", (): void => {
 
   beforeAll(async () => {
     const response = await request.post("/api/users/").send({
-      first_name: "Aisha",
-      last_name: "William",
-      user_name: "aisha_blogs",
-      password: "enjoyEveryDay",
+      first_name: "Admin",
+      last_name: "Jones",
+      user_name: "admin",
+      password: "password789",
     });
 
     token = response.body.token as string;
@@ -30,9 +30,9 @@ describe("Product Endpoint Test Suite", (): void => {
     let response = await request
       .post("/api/products/create")
       .send({
-        name: "Pepsi",
-        price: 100,
-        category: "beverages",
+        name: "New Product",
+        price: 9999,
+        category: "category",
       })
       .set("Authorization", token);
 
@@ -40,16 +40,16 @@ describe("Product Endpoint Test Suite", (): void => {
 
     expect(response.status).toEqual(200);
     expect(product1.id).toBeDefined();
-    expect(product1.name).toEqual("Pepsi");
-    expect(product1.price).toEqual(100);
-    expect(product1.category).toEqual("beverages");
+    expect(product1.name).toEqual("New Product");
+    expect(product1.price).toEqual(9999);
+    expect(product1.category).toEqual("category");
 
     response = await request
       .post("/api/products/create")
       .send({
-        name: "Maggi Noodles",
-        price: 95,
-        category: "food",
+        name: "New Product 2",
+        price: 999,
+        category: "cat",
       })
       .set("Authorization", token);
 
@@ -57,9 +57,9 @@ describe("Product Endpoint Test Suite", (): void => {
 
     expect(response.status).toEqual(200);
     expect(product1.id).toBeDefined();
-    expect(product2.name).toEqual("Maggi Noodles");
-    expect(product2.price).toEqual(95);
-    expect(product2.category).toEqual("food");
+    expect(product2.name).toEqual("New Product 2");
+    expect(product2.price).toEqual(999);
+    expect(product2.category).toEqual("cat");
   });
 
   // SHOW
@@ -68,9 +68,9 @@ describe("Product Endpoint Test Suite", (): void => {
       .get(`/api/products/${product1.id}`)
       .set("Authorization", token);
 
-    expect(response.body.name).toEqual("Pepsi");
-    expect(response.body.price).toEqual(100);
-    expect(response.body.category).toEqual("beverages");
+    expect(response.body.name).toEqual("New Product");
+    expect(response.body.price).toEqual(9999);
+    expect(response.body.category).toEqual("category");
   });
 
   // INDEX
@@ -80,12 +80,12 @@ describe("Product Endpoint Test Suite", (): void => {
       .set("Authorization", token);
 
     expect(response.status).toEqual(200);
-    expect(response.body[0].name).toEqual("Pepsi");
-    expect(response.body[0].price).toEqual(100);
-    expect(response.body[0].category).toEqual("beverages");
-    expect(response.body[1].name).toEqual("Maggi Noodles");
-    expect(response.body[1].price).toEqual(95);
-    expect(response.body[1].category).toEqual("food");
+    expect(response.body[0].name).toEqual("New Product");
+    expect(response.body[0].price).toEqual(9999);
+    expect(response.body[0].category).toEqual("category");
+    expect(response.body[1].name).toEqual("New Product 2");
+    expect(response.body[1].price).toEqual(999);
+    expect(response.body[1].category).toEqual("cat");
   });
 
   /**

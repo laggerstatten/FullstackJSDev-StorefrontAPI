@@ -34,14 +34,14 @@ export default class OrderHandler {
       const { user_id } = _request.params;
       const { status, products } = _request.body;
       if (status && products.length > 0 && user_id) {
-        const orderPlaced = await model.create({
+        const order = await model.create({
           user_id: Number(user_id),
           status,
           products,
         });
         response
           .status(200)
-          .json({ message: "Order created successfully", order: orderPlaced });
+          .json({ message: "Order created successfully", order: order });
       } else {
         response
           .status(400)

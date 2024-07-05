@@ -12,7 +12,6 @@ export class ProductModel {
   // CREATE
   async create(product: Product): Promise<Product> {
     try {
-      // @ts-ignore
       const connection = await client.connect();
       const sql = "INSERT INTO products (name, price, category) VALUES($1, $2, $3) RETURNING *";
 
@@ -33,7 +32,6 @@ export class ProductModel {
   // DELETE
   async delete(id: number): Promise<number> {
     try {
-      // @ts-ignore
       const connection = await client.connect();
       const sql = "DELETE FROM products WHERE id = ($1)";
 
@@ -50,7 +48,6 @@ export class ProductModel {
   // DELETE ALL
   async deleteAll(): Promise<void> {
     try {
-      // @ts-ignore
       const connection = await client.connect();
       const sql = "DELETE FROM products";
 
@@ -64,7 +61,6 @@ export class ProductModel {
   // INDEX
   async index(): Promise<Product[]> {
     try {
-      // @ts-ignore
       const connection = await client.connect();
       const sql = "SELECT * FROM products";
 
@@ -80,7 +76,6 @@ export class ProductModel {
   // SHOW
   async show(id: number): Promise<Product> {
     try {
-      // @ts-ignore
       const connection = await client.connect();
       const sql = "SELECT * FROM products WHERE id=($1)";
 

@@ -20,35 +20,35 @@ describe("Order Model Test Suite", (): void => {
 
 
     user1 = await userModel.create({
-      user_name: "tom_jerry",
-      first_name: "Thomas",
-      last_name: "Jasper Cat",
-      password: "TomAndJerry",
+      first_name: "First",
+      last_name: "Last",
+      user_name: "username",
+      password: "password123",
     });
 
     user2 = await userModel.create({
-      user_name: "fred_flintStone",
-      first_name: "Fred",
-      last_name: "FlintStone",
-      password: "FlintStoneFamily",
+      first_name: "First 2",
+      last_name: "Last 2",
+      user_name: "username2",
+      password: "password456",
     });
 
     product1 = await productModel.create({
-      name: "Penne Pasta",
-      price: 80,
-      category: "food",
+      name: "Product Name",
+      price: 99,
+      category: "category",
     });
 
     product2 = await productModel.create({
-      name: "Vanilla Ice cream",
-      price: 100,
-      category: "dessert",
+      name: "Product Name 2",
+      price: 999,
+      category: "category2",
     });
 
     product3 = await productModel.create({
-      name: "Sauce Pan",
-      price: 150,
-      category: "cookware",
+      name: "Product Name 3",
+      price: 9999,
+      category: "category3",
     });
   });
 
@@ -76,11 +76,11 @@ describe("Order Model Test Suite", (): void => {
       products: [
         {
           product_id: product1.id as unknown as number,
-          quantity: 2,
+          quantity: 6,
         },
         {
           product_id: product2.id as unknown as number,
-          quantity: 5,
+          quantity: 7,
         },
       ],
     });
@@ -94,11 +94,11 @@ describe("Order Model Test Suite", (): void => {
       products: [
         {
           product_id: product1.id as unknown as number,
-          quantity: 4,
+          quantity: 8,
         },
         {
           product_id: product2.id as unknown as number,
-          quantity: 8,
+          quantity: 9,
         },
       ],
     });

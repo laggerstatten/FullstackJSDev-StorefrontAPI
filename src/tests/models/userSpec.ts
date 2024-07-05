@@ -4,17 +4,17 @@ const model = new UserModel();
 
 describe("User Model Test Suite", (): void => {
   const user1: User = {
-    first_name: "John",
-    last_name: "Doe",
-    user_name: "john_doe",
-    password: "passwordABC123",
+    first_name: "First",
+    last_name: "Last",
+    user_name: "username",
+    password: "password123",
   };
 
   const user2: User = {
-    first_name: "Wade",
-    last_name: "Seth",
-    user_name: "wade_seth",
-    password: "passwordXYZ789",
+    first_name: "John",
+    last_name: "Smith",
+    user_name: "nameuser",
+    password: "password456",
   };
 
   it("should have an index method", () => {
@@ -46,7 +46,6 @@ describe("User Model Test Suite", (): void => {
     expect(getCreatedUsers).toEqual(createUserResult);
   });
 
-  // INDEX
   /**
     it("should get all user and update the user first_name", async (): Promise<void> => {
       const getAllUsers = await model.index();
@@ -57,7 +56,8 @@ describe("User Model Test Suite", (): void => {
     });
   */
 
-  it("index method should get all users", async (): Promise<void> => {
+  // INDEX
+  it("index method should return a list of users", async (): Promise<void> => {
     const getAllUsers = await model.index();
 
     expect(getAllUsers.length).toBe(1);

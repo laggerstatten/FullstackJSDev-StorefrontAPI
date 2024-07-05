@@ -17,10 +17,10 @@ describe("Order Endpoint Test Suite", (): void => {
 
   beforeAll(async () => {
     let response = await request.post("/api/users/").send({
-      first_name: "Aisha",
-      last_name: "William",
-      user_name: "aisha_blogs",
-      password: "enjoyEveryDay",
+      first_name: "Admin",
+      last_name: "Jones",
+      user_name: "admin",
+      password: "password789",
     });
 
     token = response.body.token as string;
@@ -29,9 +29,9 @@ describe("Order Endpoint Test Suite", (): void => {
     response = await request
       .post("/api/products/create")
       .send({
-        name: "Pepsi",
-        price: 100,
-        category: "beverages",
+        name: "New Product",
+        price: 9999,
+        category: "category",
       })
       .set("Authorization", token);
 
@@ -40,9 +40,9 @@ describe("Order Endpoint Test Suite", (): void => {
     response = await request
       .post("/api/products/create")
       .send({
-        name: "Maggi Noodles",
-        price: 95,
-        category: "food",
+        name: "New Product 2",
+        price: 999,
+        category: "cat",
       })
       .set("Authorization", token);
 

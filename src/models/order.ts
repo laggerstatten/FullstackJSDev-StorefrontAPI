@@ -19,7 +19,6 @@ export class OrderModel {
 
   async addProduct(product: OrderProduct): Promise<OrderProduct> {
     try {
-      // @ts-ignore
       const connection = await client.connect();
       const sql = `INSERT INTO order_products (order_id, product_id, quantity) VALUES(${Number(
         product.order_id
@@ -39,7 +38,6 @@ export class OrderModel {
   // CREATE
   async create(order: Order): Promise<Order> {
     try {
-      // @ts-ignore
       const connection = await client.connect();
       const sql = "INSERT INTO orders (status, user_id) VALUES($1, $2) RETURNING *";
 
@@ -66,7 +64,6 @@ export class OrderModel {
   // DELETE
   async delete(id: number): Promise<number> {
     try {
-      // @ts-ignore
       const connection = await client.connect();
       const sql = "DELETE FROM order_products WHERE order_id = ($1)";
 
@@ -87,7 +84,6 @@ export class OrderModel {
   // DELETE ALL
   async deleteAll(): Promise<void> {
     try {
-      // @ts-ignore
       const connection = await client.connect();
       const sql = "DELETE FROM order_products";
 
@@ -105,7 +101,6 @@ export class OrderModel {
   // INDEX
   async index(): Promise<Order[]> {
     try {
-      // @ts-ignore
       const connection = await client.connect();
       const sql = "SELECT * FROM orders";
 
@@ -121,7 +116,6 @@ export class OrderModel {
   // SHOW
   async show(id: number): Promise<Order> {
     try {
-      // @ts-ignore
       const connection = await client.connect();
       const sql = "SELECT * FROM orders WHERE id=($1)"; // changed from user_id to id
 
