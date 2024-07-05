@@ -1,3 +1,11 @@
+# Build results
+dist
 
-/node_modules
+# Packages and package.json files
+node_modules
+package.json
+
+# Environment
 .env
+.env
+/.passed
