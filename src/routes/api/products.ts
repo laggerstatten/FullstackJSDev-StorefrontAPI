@@ -21,7 +21,7 @@ products.get("/:id", (request, response) => {
 });
 
 // DELETE
-products.delete("/:id", (request, response) => {
+products.delete("/:id", authenticate, (request, response) => {
   productHandler.delete(request, response);
 });
 
